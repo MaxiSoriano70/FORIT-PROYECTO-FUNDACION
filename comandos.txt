@@ -1,0 +1,11 @@
+INICIAR PROYECTO
+npm init -y
+
+INSTALAR TYPESCRIPT
+npm i -D typescript
+
+CREAR tsconfig
+npx tsc --init
+
+CREA LA CARPETA DIST
+npx tsc -p .
