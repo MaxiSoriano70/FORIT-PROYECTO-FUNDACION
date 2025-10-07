@@ -9,3 +9,6 @@ npx tsc --init
 
 CREA LA CARPETA DIST
 npx tsc -p .
+
+INSTALAR VITEST
+npm install -D vitest
