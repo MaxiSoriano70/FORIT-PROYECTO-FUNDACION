@@ -12,3 +12,6 @@ npx tsc -p .
 
 INSTALAR VITEST
 npm install -D vitest
+
+INSTALAR FAKER
+yarn add @faker-js/faker@9.2.0
