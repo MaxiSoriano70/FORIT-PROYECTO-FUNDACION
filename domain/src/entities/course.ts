@@ -1,3 +1,4 @@
+import { CourseCategory } from "../utils/enums/courseCategory.js";
 import type { Entity } from "../utils/types/entity.js";
 
 export interface Course extends Entity {
@@ -8,6 +9,7 @@ export interface Course extends Entity {
     startDate: Date;
     endDate: Date;
     pricePerMonth: number;
+    category: CourseCategory;
     adminId: string;
     teacherId: string;
 }
