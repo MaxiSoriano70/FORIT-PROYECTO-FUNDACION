@@ -1,7 +1,7 @@
 export const RegistrationStatus = {
-    ACTIVE: "ACTIVE",
-    DROPPED: "DROPPED",
-    COMPLETED: "COMPLETED",
+    ACTIVO: "ACTIVO",
+    ABANDONADO: "ABANDONADO",
+    COMPLETADO: "COMPLETADO",
 } as const;
 
-export type RegistrationStatus = (typeof RegistrationStatus) [keyof typeof RegistrationStatus];
+export type RegistrationStatus = (typeof RegistrationStatus)[keyof typeof RegistrationStatus];
