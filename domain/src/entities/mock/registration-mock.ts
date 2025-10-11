@@ -3,16 +3,18 @@ import type { Registration } from "../registration";
 import type { Course } from "../course";
 import { RegistrationStatus } from "../../utils/enums/registrationStatus";
 
+
 export function registrationMock(course: Course, opts?: Partial<Registration>): Registration {
-    const totalFees = course.durationMonths * course.pricePerMonth;
+    const totalQuotas = course.durationMonths;      // cantidad de meses del curso
+    const pricePerQuota = course.pricePerMonth;     // precio de cada cuota
+    const totalAmount = totalQuotas * pricePerQuota;
 
-    const paidQuotas = faker.number.int({ min: 0, max: course.durationMonths });
-    const paidFees = paidQuotas * course.pricePerMonth;
+    const paidQuotas = faker.number.int({ min: 0, max: totalQuotas }); // cuotas ya pagadas
+    const amountPaid = paidQuotas * pricePerQuota;                     // monto abonado
 
-    const finishedCourse = faker.datatype.boolean();
-
-    let status: RegistrationStatus =
-        paidQuotas === course.durationMonths && finishedCourse
+    const courseFinished = faker.datatype.boolean();                   // indica si el curso terminó
+    const status: RegistrationStatus =
+        courseFinished && paidQuotas === totalQuotas
             ? RegistrationStatus.COMPLETADO
             : RegistrationStatus.ACTIVO;
 
@@ -20,16 +22,16 @@ export function registrationMock(course: Course, opts?: Partial<Registration>): 
         id: faker.string.uuid(),
         studentId: faker.string.uuid(),
         courseId: course.id,
-        enrollmentDate: faker.date.past({ years: 1 }),
+        enrollmentDate: faker.date.past({ years: 1 }),    // fecha de inscripción
         status,
-        totalFees,
-        paidFees,
-        completionDate:
-            status === RegistrationStatus.COMPLETADO ? new Date() : undefined,
-        certificateUrl:
-            status === RegistrationStatus.COMPLETADO ? faker.internet.url() : undefined,
+        courseFinished,
+        completionDate: courseFinished ? new Date() : undefined,  // fecha de finalización si terminó
+        totalQuotas,
         paidQuotas,
-        totalQuotas: course.durationMonths,
+        pricePerQuota,
+        totalAmount,
+        amountPaid,
+        certificateUrl: courseFinished ? faker.internet.url() : undefined,
         ...opts,
     };
 }
