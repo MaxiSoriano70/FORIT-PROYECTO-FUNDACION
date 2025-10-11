@@ -4,12 +4,12 @@ export interface Service<T extends Entity> extends ServiceQuery<T>, ServiceStora
 
 /* SEPARAR SERVICE QUE HACEB CANBIOS EN LA DB CON SERVICE QUE NO HACEN CAMBIOS EN LA DB */
 interface ServiceQuery<T extends Entity> {
-    findById: (id: string) => Promise<T | undefined>;
     findAll: () => Promise<T[]>;
+    findById: (id: string) => Promise<T | undefined>;
 }
 
 interface ServiceStorage<T extends Entity> {
-    editOne(data: T): Promise<T>;
+    editOne: (id: string, data: Partial<T>) => Promise<T>;
     save(data: T): Promise<void>;
     deleteById(id: string): Promise<void>;
 }
