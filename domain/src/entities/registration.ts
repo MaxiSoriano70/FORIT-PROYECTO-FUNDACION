@@ -18,3 +18,5 @@ export interface Registration extends Entity {
 
     certificateUrl: string | undefined;        // Enlace al certificado (si lo obtuvo)
 }
+
+export type SecureRegistration = Omit<Registration, "studentId" | "amountPaid">;
