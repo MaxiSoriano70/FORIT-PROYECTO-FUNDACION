@@ -33,6 +33,6 @@ describe("Editar usuario existente", () => {
 
         await expect(
             updateUser("999", { firstName: "Fake" }, { userService })
-        ).rejects.toThrowError("Usuario con 999 no encontrado");
+        ).rejects.toThrowError("Usuario con id 999 no encontrado");
     });
 });
