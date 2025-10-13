@@ -1,4 +1,5 @@
 import { User } from "../../entities/user";
+import { UserRole } from "../../utils/enums/userRole";
 import { UserService } from "../user-service";
 
 export class MockedUserService implements UserService {
@@ -65,5 +66,16 @@ export class MockedUserService implements UserService {
             throw new Error(`Usuario con id ${id} no encontrado`);
         }
         this.users.splice(index, 1);
+    };
+
+
+    changeRole = async (userId: string, newRole: string | UserRole): Promise<User> => {
+        const index = this.users.findIndex(u => u.id === userId);
+        if (index === -1) {
+            throw new Error(`Usuario con id ${userId} no encontrado`);
+        }
+
+        this.users[index] = { ...this.users[index], role: newRole as UserRole } as User;
+        return this.users[index];
     };
 }
