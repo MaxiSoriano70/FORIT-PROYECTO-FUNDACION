@@ -16,5 +16,4 @@ export interface Course extends Entity {
     enrolledCount?: number;    // cantidad actual de alumnos inscritos (opcional)
 }
 
-// Versión segura para exponer públicamente
-export type SecureCourse = Omit<Course, "adminId">; // no se expone el ID del administrador
+export type SecureCourse = Omit<Course, "adminId">;
