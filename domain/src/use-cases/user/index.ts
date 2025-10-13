@@ -16,3 +16,5 @@ export * from "./save-user.js";
 export * from "./save-user.spec.js";
 export * from "./delete-user.js";
 export * from "./delete-user.spec.js";
+export * from "./change-user-role-user.js";
+export * from "./change-user-role-user.spec.js";
