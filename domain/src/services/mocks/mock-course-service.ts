@@ -22,8 +22,8 @@ export class MockedCourseService implements CourseService {
         return this.courses.find(c => c.name.toLowerCase() === name.toLowerCase());
     };
 
-    findByCategory = async (category: CourseCategory): Promise<Course[]> => {
-        return this.courses.filter(c => c.category === category);
+    findByCategoryId = async (categoryId: string): Promise<Course[]> => {
+        return this.courses.filter(c => c.categoryId === categoryId);
     };
 
     findByTeacherId = async (teacherId: string): Promise<Course[]> => {
