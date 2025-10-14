@@ -13,29 +13,26 @@ function generateCourseDates() {
 export function courseMock(opts?: Partial<Course>): Course {
     const { startDate, endDate, durationMonths } = generateCourseDates();
 
-    const base: Course = {
-        id: faker.string.uuid(),
-        name: faker.company.buzzPhrase(),
-        description: faker.lorem.paragraph(),
-        durationMonths,
-        schedule: faker.helpers.arrayElement([
-            "Lunes a Viernes - 18:00 a 20:00",
-            "Sábados - 09:00 a 13:00",
-            "Martes y Jueves - 19:00 a 21:00",
-        ]),
-        startDate,
-        endDate,
-        pricePerMonth: faker.number.int({ min: 100, max: 1000 }),
-        category: faker.helpers.arrayElement(Object.values(CourseCategory)),
-        adminId: faker.string.uuid(),
-        maxCapacity: faker.number.int({ min: 10, max: 50 }),
-        enrolledCount: faker.number.int({ min: 0, max: 50 }),
+    return {
         ...opts,
+        id: opts?.id ?? faker.string.uuid(),
+        name: opts?.name ?? faker.company.buzzPhrase(),
+        description: opts?.description ?? faker.lorem.paragraph(),
+        durationMonths: opts?.durationMonths ?? durationMonths,
+        schedule:
+            opts?.schedule ??
+            faker.helpers.arrayElement([
+                "Lunes a Viernes - 18:00 a 20:00",
+                "Sábados - 09:00 a 13:00",
+                "Martes y Jueves - 19:00 a 21:00",
+            ]),
+        startDate: opts?.startDate ?? startDate,
+        endDate: opts?.endDate ?? endDate,
+        pricePerMonth: opts?.pricePerMonth ?? faker.number.int({ min: 100, max: 1000 }),
+        categoryId: opts?.categoryId ?? faker.helpers.arrayElement(Object.values(CourseCategory)),
+        adminId: opts?.adminId ?? faker.string.uuid(),
+        teacherId: opts?.teacherId ?? faker.string.uuid(),
+        maxCapacity: opts?.maxCapacity ?? faker.number.int({ min: 10, max: 50 }),
+        enrolledCount: opts?.enrolledCount ?? faker.number.int({ min: 0, max: 50 }),
     };
-
-    if (faker.datatype.boolean()) {
-        base.teacherId = faker.string.uuid();
-    }
-
-    return base;
 }
