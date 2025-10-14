@@ -9,7 +9,7 @@ export interface Course extends Entity {
     startDate: Date;           // fecha de inicio del curso
     endDate: Date;             // fecha de finalización del curso
     pricePerMonth: number;     // precio por mes del curso
-    category: CourseCategory;  // categoría del curso
+    categoryId: string;        // categoría del curso
     adminId: string;           // ID del administrador que creó el curso
     teacherId?: string;        // ID del docente asignado (opcional)
     maxCapacity: number;       // capacidad máxima de alumnos
