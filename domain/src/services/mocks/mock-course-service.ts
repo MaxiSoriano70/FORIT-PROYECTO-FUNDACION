@@ -32,12 +32,12 @@ export class MockedCourseService implements CourseService {
 
     findActiveCourses = async (): Promise<Course[]> => {
         const today = new Date();
-        return this.courses.filter(c => c.endDate > today);
+        return this.courses.filter(c => c.endDate >= today);
     };
 
     findUpcomingCourses = async (): Promise<Course[]> => {
         const today = new Date();
-        return this.courses.filter(c => c.startDate > today);
+        return this.courses.filter(c => c.startDate >= today);
     };
 
     findFullCourses = async (): Promise<Course[]> => {
