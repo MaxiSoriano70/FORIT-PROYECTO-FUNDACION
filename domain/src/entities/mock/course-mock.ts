@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import type { Course } from "../course.js";
-import { CourseCategory } from "../../utils/enums/courseCategory.js";
 
 function generateCourseDates() {
     const startDate = faker.date.future({ years: 1 });
@@ -29,7 +28,7 @@ export function courseMock(opts?: Partial<Course>): Course {
         startDate: opts?.startDate ?? startDate,
         endDate: opts?.endDate ?? endDate,
         pricePerMonth: opts?.pricePerMonth ?? faker.number.int({ min: 100, max: 1000 }),
-        categoryId: opts?.categoryId ?? faker.helpers.arrayElement(Object.values(CourseCategory)),
+        categoryId: opts?.categoryId ?? faker.string.uuid(),
         adminId: opts?.adminId ?? faker.string.uuid(),
         teacherId: opts?.teacherId ?? faker.string.uuid(),
         maxCapacity: opts?.maxCapacity ?? faker.number.int({ min: 10, max: 50 }),
