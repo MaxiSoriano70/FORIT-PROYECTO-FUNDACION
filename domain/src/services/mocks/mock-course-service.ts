@@ -1,5 +1,4 @@
 import { Course } from "../../entities";
-import { CourseCategory } from "../../utils/enums/courseCategory";
 import { CourseService } from "../course-service";
 
 
