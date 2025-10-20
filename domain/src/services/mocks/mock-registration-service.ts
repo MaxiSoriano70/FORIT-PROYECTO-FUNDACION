@@ -1,6 +1,6 @@
 import { Registration } from "../../entities";
+import { RegistrationStatus } from "../../utils/enums/registrationStatus";
 import { RegistrationService } from "../registration-service";
-
 
 export class MockedRegistrationService implements RegistrationService {
     private registrations: Registration[] = [];
@@ -44,7 +44,7 @@ export class MockedRegistrationService implements RegistrationService {
         this.registrations.filter(r => r.courseId === courseId);
 
     countActiveByCourseId = async (courseId: string): Promise<number> =>
-        this.registrations.filter(r => r.courseId === courseId && r.status === "ACTIVO").length;
+        this.registrations.filter(r => r.courseId === courseId && r.status === RegistrationStatus.ACTIVO).length;
 
     isStudentRegistered = async (courseId: string, studentId: string): Promise<boolean> =>
         this.registrations.some(r => r.courseId === courseId && r.studentId === studentId);
@@ -54,7 +54,7 @@ export class MockedRegistrationService implements RegistrationService {
         if (!registration) throw new Error(`Registration con id ${registrationId} no encontrado`);
         registration.paidQuotas += quantity;
         if (registration.paidQuotas >= registration.totalQuotas) {
-            registration.status = "COMPLETADO";
+            registration.status = RegistrationStatus.COMPLETADO;
         }
         return registration;
     };
@@ -63,14 +63,16 @@ export class MockedRegistrationService implements RegistrationService {
         const registration = await this.findById(registrationId);
         if (!registration) throw new Error(`Registration con id ${registrationId} no encontrado`);
         registration.courseFinished = true;
-        registration.status = "COMPLETADO";
+        registration.status = RegistrationStatus.COMPLETADO;
         registration.completionDate = new Date();
         return registration;
     };
 
+    // 7️⃣ Buscar inscripciones activas (solo ACTIVO)
     findActive = async (): Promise<Registration[]> =>
-        this.registrations.filter(r => r.status === "ACTIVO");
+        this.registrations.filter(r => r.status === RegistrationStatus.ACTIVO);
 
+    // 🔹 Buscar inscripciones incompletas (solo ABANDONADO)
     findIncomplete = async (): Promise<Registration[]> =>
-        this.registrations.filter(r => r.paidQuotas < r.totalQuotas);
+        this.registrations.filter(r => r.status === RegistrationStatus.ABANDONADO);
 }
