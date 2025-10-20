@@ -5,27 +5,14 @@ import { MockedCourseService } from "../../services/mocks/mock-course-service";
 import { MockedUserService } from "../../services/mocks/mock-user-service";
 import { getRegistrationSave } from "./save-registration";
 
-
 describe("Guardar inscripción", () => {
-    const course = courseMock({
-        id: "course1",
-        name: "JavaScript Avanzado",
-    });
-
-    const student = userMock({
-        id: "student1",
-        firstName: "Juan",
-        lastName: "Pérez",
-    });
-
-    const registration = registrationMock({
-        id: "reg1",
-        studentId: "student1",
-        courseId: "course1",
-    });
+    const course = courseMock({ id: "course1", name: "JavaScript Avanzado" });
+    const student = userMock({ id: "student1", firstName: "Juan", lastName: "Pérez" });
+    const registration = registrationMock({ id: "reg1", studentId: "student1", courseId: "course1" });
 
     test("Debería guardar la inscripción y devolver datos de curso y estudiante", async () => {
         const registrationService = new MockedRegistrationService([]);
+        vi.spyOn(registrationService, "isStudentRegistered").mockResolvedValue(false);
         const courseService = new MockedCourseService([course]);
         const userService = new MockedUserService([student]);
 
@@ -38,16 +25,24 @@ describe("Guardar inscripción", () => {
         expect(spyFindCourse).toHaveBeenCalledWith("course1");
         expect(spyFindUser).toHaveBeenCalledWith("student1");
         expect(spySave).toHaveBeenCalledWith(registration);
+        expect(registrationService.isStudentRegistered).toHaveBeenCalledWith("course1", "student1");
 
         expect(result).toEqual({
             ...registration,
             course: { id: course.id, name: course.name },
-            student: {
-                id: student.id,
-                firstName: student.firstName,
-                lastName: student.lastName,
-            },
+            student: { id: student.id, firstName: student.firstName, lastName: student.lastName },
         });
+    });
+
+    test("Debería lanzar error si el estudiante ya está inscrito", async () => {
+        const registrationService = new MockedRegistrationService([]);
+        vi.spyOn(registrationService, "isStudentRegistered").mockResolvedValue(true);
+        const courseService = new MockedCourseService([course]);
+        const userService = new MockedUserService([student]);
+
+        await expect(getRegistrationSave(registration, { registrationService, courseService, userService }))
+            .rejects
+            .toThrowError(`El estudiante Juan Pérez ya está inscrito en el curso JavaScript Avanzado`);
     });
 
     test("Debería lanzar error si el curso no existe", async () => {
@@ -68,15 +63,5 @@ describe("Guardar inscripción", () => {
         await expect(getRegistrationSave(registration, { registrationService, courseService, userService }))
             .rejects
             .toThrowError(`Estudiante con id ${registration.studentId} no encontrado`);
-    });
-
-    test("Debería lanzar error si la inscripción ya existe", async () => {
-        const registrationService = new MockedRegistrationService([registration]);
-        const courseService = new MockedCourseService([course]);
-        const userService = new MockedUserService([student]);
-
-        await expect(getRegistrationSave(registration, { registrationService, courseService, userService }))
-            .rejects
-            .toThrowError(`Registration con id ${registration.id} ya existe`);
     });
 });
