@@ -35,7 +35,7 @@ class CourseManager extends Manager {
     };
 }
 
-const coursesManager = new CourseManager();
+const courseManager = new CourseManager();
 
-export { coursesManager };
+export { courseManager };
 export default CourseManager;

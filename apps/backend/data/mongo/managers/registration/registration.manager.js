@@ -57,7 +57,7 @@ class RegistrationManager extends Manager {
     };
 }
 
-const registrationsManager = new RegistrationManager();
+const registrationManager = new RegistrationManager();
 
-export { registrationsManager };
+export { registrationManager };
 export default RegistrationManager;

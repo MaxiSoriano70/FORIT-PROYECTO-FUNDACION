@@ -11,7 +11,7 @@ class CategoryManager extends Manager {
     };
 }
 
-const categoriesManager = new CategoryManager();
+const categoryManager = new CategoryManager();
 
-export { categoriesManager };
+export { categoryManager };
 export default CategoryManager;
