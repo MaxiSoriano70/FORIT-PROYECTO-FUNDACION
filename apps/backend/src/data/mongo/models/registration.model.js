@@ -1,5 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import { RegistrationStatus } from "../../../emuns/registrationStatus.enum.js";
+import { RegistrationStatus } from "../../../enums/registrationStatus.enum.js";
 
 const collection = "registrations";
 

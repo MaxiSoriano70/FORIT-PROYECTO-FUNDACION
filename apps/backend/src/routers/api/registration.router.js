@@ -3,7 +3,7 @@ import { registrationManager } from "../../data/mongo/managers/registration/regi
 
 const routerRegistration = Router();
 
-const getAllRegistrations = async (req, res) => {
+const getAllRegistrations = async (req, res, next) => {
     try {
         const registrations = await registrationManager.findAll();
         res.status(200).json({
@@ -13,14 +13,14 @@ const getAllRegistrations = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getRegistrationById = async (req, res) => {
+const getRegistrationById = async (req, res, next) => {
     try {
         const registration = await registrationManager.findById(req.params.id);
-        if (!registration) return res.status(404).json({ message: "Inscripción no encontrada" });
+        if (!registration) return next({ message: "Inscripción no encontrada", status: 404 });
         res.status(200).json({
             message: "Inscripción encontrada",
             data: registration,
@@ -28,11 +28,11 @@ const getRegistrationById = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getRegistrationsByStudent = async (req, res) => {
+const getRegistrationsByStudent = async (req, res, next) => {
     try {
         const registrations = await registrationManager.findByStudentId(req.params.studentId);
         res.status(200).json({
@@ -42,11 +42,11 @@ const getRegistrationsByStudent = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getRegistrationsByCourse = async (req, res) => {
+const getRegistrationsByCourse = async (req, res, next) => {
     try {
         const registrations = await registrationManager.findByCourseId(req.params.courseId);
         res.status(200).json({
@@ -56,11 +56,11 @@ const getRegistrationsByCourse = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const createRegistration = async (req, res) => {
+const createRegistration = async (req, res, next) => {
     try {
         const registration = await registrationManager.save(req.body);
         res.status(201).json({
@@ -72,11 +72,11 @@ const createRegistration = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("ya existe") ? 400 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const updateRegistration = async (req, res) => {
+const updateRegistration = async (req, res, next) => {
     try {
         const registration = await registrationManager.editOne(req.params.id, req.body);
         res.status(200).json({
@@ -88,11 +88,11 @@ const updateRegistration = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrado") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const deleteRegistration = async (req, res) => {
+const deleteRegistration = async (req, res, next) => {
     try {
         await registrationManager.deleteById(req.params.id);
         res.status(200).json({
@@ -103,11 +103,11 @@ const deleteRegistration = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrado") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const markQuotaPaid = async (req, res) => {
+const markQuotaPaid = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { quantity } = req.body;
@@ -121,11 +121,11 @@ const markQuotaPaid = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrada") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const finishCourse = async (req, res) => {
+const finishCourse = async (req, res, next) => {
     try {
         const { id } = req.params;
         const registration = await registrationManager.finishCourse(id);
@@ -138,11 +138,11 @@ const finishCourse = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrada") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const getActiveRegistrations = async (req, res) => {
+const getActiveRegistrations = async (req, res, next) => {
     try {
         const registrations = await registrationManager.findActive();
         res.status(200).json({
@@ -152,11 +152,11 @@ const getActiveRegistrations = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getIncompleteRegistrations = async (req, res) => {
+const getIncompleteRegistrations = async (req, res, next) => {
     try {
         const registrations = await registrationManager.findIncomplete();
         res.status(200).json({
@@ -166,7 +166,7 @@ const getIncompleteRegistrations = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 

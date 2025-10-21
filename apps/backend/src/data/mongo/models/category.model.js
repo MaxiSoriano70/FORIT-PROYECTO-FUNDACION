@@ -29,3 +29,4 @@ const categorySchema = new Schema({
 }, { timestamps: true });
 
 const Category = model(collection, categorySchema);
+export default Category;

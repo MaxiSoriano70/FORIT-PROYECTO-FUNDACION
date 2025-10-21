@@ -1,4 +1,4 @@
-import Manager from "./manager.mongo.js";
+import Manager from "../manager.mongo.js";
 import Registration from "../../models/registration.model.js";
 
 class RegistrationManager extends Manager {

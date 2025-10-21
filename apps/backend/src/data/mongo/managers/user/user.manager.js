@@ -1,6 +1,6 @@
-import Manager from "./manager.mongo.js";
+import Manager from "../manager.mongo.js";
 import User from "../../models/user.model.js";
-import { UserRole } from "../../utils/enums/userRole.js";
+import { UserRole } from "../../../../enums/userRole.enum.js";
 
 class UserManager extends Manager {
     constructor() {

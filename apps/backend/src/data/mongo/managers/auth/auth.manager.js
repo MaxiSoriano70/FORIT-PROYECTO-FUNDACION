@@ -1,9 +1,10 @@
-import { usersManager } from "../user/user.manager.js";
+
 import bcrypt from "bcryptjs";
+import { userManager } from "../user/user.manager.js";
 
 class AuthManager {
     register = async (data) => {
-        const existingUser = await usersManager.findBy({ email: data.email });
+        const existingUser = await userManager.findBy({ email: data.email });
         if (existingUser) throw new Error("El email ya está registrado");
 
         const hashedPassword = await bcrypt.hash(data.password, 10);

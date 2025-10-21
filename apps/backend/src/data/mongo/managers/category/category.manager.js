@@ -1,4 +1,4 @@
-import Manager from "./manager.mongo.js";
+import Manager from "../manager.mongo.js";
 import Category from "../../models/category.model.js";
 
 class CategoryManager extends Manager {

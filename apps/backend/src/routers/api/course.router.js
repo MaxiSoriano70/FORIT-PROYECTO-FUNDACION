@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { courseManager } from "../../../data/mongo/managers/course/course.manager.js";
+import { courseManager } from "../../data/mongo/managers/course/course.manager.js";
 
 const routerCourse = Router();
 
-const getAllCourses = async (req, res) => {
+const getAllCourses = async (req, res, next) => {
     try {
         const courses = await courseManager.findAll();
         res.status(200).json({
@@ -13,14 +13,14 @@ const getAllCourses = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getCourseById = async (req, res) => {
+const getCourseById = async (req, res, next) => {
     try {
         const course = await courseManager.findById(req.params.id);
-        if (!course) return res.status(404).json({ message: "Curso no encontrado" });
+        if (!course) return next({ message: "Curso no encontrado", status: 404 });
         res.status(200).json({
             message: "Curso encontrado",
             data: course,
@@ -28,14 +28,14 @@ const getCourseById = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getCourseByName = async (req, res) => {
+const getCourseByName = async (req, res, next) => {
     try {
         const course = await courseManager.findByName(req.params.name);
-        if (!course) return res.status(404).json({ message: "Curso no encontrado" });
+        if (!course) return next({ message: "Curso no encontrado", status: 404 });
         res.status(200).json({
             message: "Curso encontrado",
             data: course,
@@ -43,11 +43,11 @@ const getCourseByName = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getCoursesByCategoryId = async (req, res) => {
+const getCoursesByCategoryId = async (req, res, next) => {
     try {
         const courses = await courseManager.findByCategoryId(req.params.categoryId);
         res.status(200).json({
@@ -57,11 +57,11 @@ const getCoursesByCategoryId = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getCoursesByTeacherId = async (req, res) => {
+const getCoursesByTeacherId = async (req, res, next) => {
     try {
         const courses = await courseManager.findByTeacherId(req.params.teacherId);
         res.status(200).json({
@@ -71,11 +71,11 @@ const getCoursesByTeacherId = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getActiveCourses = async (req, res) => {
+const getActiveCourses = async (req, res, next) => {
     try {
         const courses = await courseManager.findActiveCourses();
         res.status(200).json({
@@ -85,11 +85,11 @@ const getActiveCourses = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getUpcomingCourses = async (req, res) => {
+const getUpcomingCourses = async (req, res, next) => {
     try {
         const courses = await courseManager.findUpcomingCourses();
         res.status(200).json({
@@ -99,11 +99,11 @@ const getUpcomingCourses = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getFullCourses = async (req, res) => {
+const getFullCourses = async (req, res, next) => {
     try {
         const courses = await courseManager.findFullCourses();
         res.status(200).json({
@@ -113,11 +113,11 @@ const getFullCourses = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const createCourse = async (req, res) => {
+const createCourse = async (req, res, next) => {
     try {
         const course = await courseManager.save(req.body);
         res.status(201).json({
@@ -129,11 +129,11 @@ const createCourse = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("ya existe") ? 400 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const updateCourse = async (req, res) => {
+const updateCourse = async (req, res, next) => {
     try {
         const course = await courseManager.editOne(req.params.id, req.body);
         res.status(200).json({
@@ -145,11 +145,11 @@ const updateCourse = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrado") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const deleteCourse = async (req, res) => {
+const deleteCourse = async (req, res, next) => {
     try {
         await courseManager.deleteById(req.params.id);
         res.status(200).json({
@@ -160,7 +160,7 @@ const deleteCourse = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrado") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
@@ -172,7 +172,6 @@ routerCourse.get("/teacher/:teacherId", getCoursesByTeacherId);
 routerCourse.get("/active", getActiveCourses);
 routerCourse.get("/upcoming", getUpcomingCourses);
 routerCourse.get("/full", getFullCourses);
-
 routerCourse.post("/", createCourse);
 routerCourse.put("/:id", updateCourse);
 routerCourse.delete("/:id", deleteCourse);

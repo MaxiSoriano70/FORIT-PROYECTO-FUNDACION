@@ -3,7 +3,7 @@ import { authManager } from "../../data/mongo/managers/auth/auth.manager.js";
 
 const routerAuth = Router();
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
     try {
         const data = req.body;
         const user = await authManager.register(data);
@@ -19,11 +19,11 @@ const register = async (req, res) => {
 
         if (msg === "El email ya está registrado") status = 400;
 
-        return res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const user = await authManager.login(email, password);
@@ -40,7 +40,7 @@ const login = async (req, res) => {
         if (msg === "Usuario no encontrado") status = 404;
         else if (msg === "Contraseña incorrecta") status = 401;
 
-        return res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 

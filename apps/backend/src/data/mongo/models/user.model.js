@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { UserRole } from "../../../emuns/userRole.emun.js";
+import { UserRole } from "../../../enums/userRole.enum.js";
 
 const collection = "users";
 

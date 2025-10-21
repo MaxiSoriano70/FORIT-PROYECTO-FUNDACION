@@ -3,7 +3,7 @@ import { categoryManager } from "../../data/mongo/managers/category/category.man
 
 const routerCategory = Router();
 
-const getAllCategories = async (req, res) => {
+const getAllCategories = async (req, res, next) => {
     try {
         const categories = await categoryManager.findAll();
         res.status(200).json({
@@ -13,14 +13,16 @@ const getAllCategories = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getCategoryById = async (req, res) => {
+const getCategoryById = async (req, res, next) => {
     try {
         const category = await categoryManager.findById(req.params.id);
-        if (!category) return res.status(404).json({ message: "Categoría no encontrada" });
+        if (!category) {
+            return next({ message: "Categoría no encontrada", status: 404 });
+        }
         res.status(200).json({
             message: "Categoría encontrada",
             data: category,
@@ -28,14 +30,16 @@ const getCategoryById = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const getCategoryByName = async (req, res) => {
+const getCategoryByName = async (req, res, next) => {
     try {
         const category = await categoryManager.findByName(req.params.name);
-        if (!category) return res.status(404).json({ message: "Categoría no encontrada" });
+        if (!category) {
+            return next({ message: "Categoría no encontrada", status: 404 });
+        }
         res.status(200).json({
             message: "Categoría encontrada",
             data: category,
@@ -43,11 +47,11 @@ const getCategoryByName = async (req, res) => {
             url: req.url,
         });
     } catch (error) {
-        res.status(500).json({ message: error?.message || String(error) });
+        next({ message: error?.message || String(error), status: 500 });
     }
 };
 
-const createCategory = async (req, res) => {
+const createCategory = async (req, res, next) => {
     try {
         const category = await categoryManager.save(req.body);
         res.status(201).json({
@@ -59,11 +63,11 @@ const createCategory = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("ya existe") ? 400 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const updateCategory = async (req, res) => {
+const updateCategory = async (req, res, next) => {
     try {
         const category = await categoryManager.editOne(req.params.id, req.body);
         res.status(200).json({
@@ -75,11 +79,11 @@ const updateCategory = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrada") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
-const deleteCategory = async (req, res) => {
+const deleteCategory = async (req, res, next) => {
     try {
         await categoryManager.deleteById(req.params.id);
         res.status(200).json({
@@ -90,7 +94,7 @@ const deleteCategory = async (req, res) => {
     } catch (error) {
         const msg = error?.message || String(error);
         const status = msg.includes("no encontrada") ? 404 : 500;
-        res.status(status).json({ message: msg });
+        next({ message: msg, status });
     }
 };
 
