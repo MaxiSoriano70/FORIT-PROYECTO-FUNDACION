@@ -1,6 +1,4 @@
-import { CourseCategory } from "../utils/enums/courseCategory.js";
 import type { Entity } from "../utils/types/entity.js";
-
 export interface Course extends Entity {
     name: string;              // nombre del curso
     description: string;       // descripción del curso
