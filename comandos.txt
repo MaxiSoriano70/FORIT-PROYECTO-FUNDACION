@@ -17,3 +17,11 @@ INSTALAR FAKER
 yarn add @faker-js/faker@9.2.0
 
 CAMBIAR EL BACK END DE JS A TS Y AGREGAR CONTROLLERS
+
+npm init -y
+
+npm install typescript -D
+
+npm i dotenv
+
+npm install @types/express -D
