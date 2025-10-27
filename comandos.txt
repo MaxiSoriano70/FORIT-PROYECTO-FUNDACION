@@ -25,3 +25,12 @@ npm install typescript -D
 npm i dotenv
 
 npm install @types/express -D
+
+/*Para levantar y escuhar los cambios del back end*/
+npm install ts-node-dev -D -E
+
+npm install --save-dev @types/bcryptjs@2.4.6
+
+npm install --save-dev @types/express@5.0.3
+
+npm install --save-dev @types/mongoose@5.11.96
