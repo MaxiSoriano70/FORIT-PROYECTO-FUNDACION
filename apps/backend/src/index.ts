@@ -1,13 +1,28 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Request, Response, NextFunction } from "express";
+import router from './routers/index.router.js';
+import errorHandler from './middlewares/errorHandler.mid.js';
+import dbConnect from './helpers/dbConnect.helper.js';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+/* Server */
+const server = express();
+const PORT: number = 8080;
 
-app.get('/', (_req, res) => {
-    res.send('Hello, World!');
-})
+const ready = (): void => {
+    console.log(`Server ready http://localhost:${PORT}/`);
+    dbConnect();
+};
 
-app.listen(PORT, () => {
-    console.log(`Server ready on http://localhost:${PORT}`);
+server.listen(PORT, ready);
+
+/* Middlewares */
+server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
+
+/* Router */
+server.use("/", router);
+
+/* Error Handler */
+server.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    errorHandler(err, req, res, next);
 });
