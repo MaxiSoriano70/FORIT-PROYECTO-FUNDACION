@@ -16,6 +16,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "17.2.3",
     "express": "5.1.0"
   }
