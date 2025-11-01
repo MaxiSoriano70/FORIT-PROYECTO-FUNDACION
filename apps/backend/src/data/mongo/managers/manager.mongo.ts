@@ -1,6 +1,6 @@
-import { Model, Document, FilterQuery, UpdateQuery } from "mongoose";
+import { Model, Document, FilterQuery, UpdateQuery, Types } from "mongoose";
 
-type Lean<T> = Omit<T, keyof Document>;
+export type Lean<T> = Omit<T, keyof Document> & { _id: Types.ObjectId };
 
 class Manager<T extends Document> {
     protected model: Model<T>;
@@ -27,8 +27,8 @@ class Manager<T extends Document> {
         return await this.model.findByIdAndUpdate(id, data, { new: true }).lean() as Lean<T> | null;
     };
 
-    deleteById = async (id: string): Promise<T | null> => {
-        return await this.model.findByIdAndDelete(id);
+    deleteById = async (id: string): Promise<Lean<T> | null> => {
+        return await this.model.findByIdAndDelete(id).lean() as Lean<T> | null;
     };
 
     findBy = async (filter: FilterQuery<T>): Promise<Lean<T> | null> => {

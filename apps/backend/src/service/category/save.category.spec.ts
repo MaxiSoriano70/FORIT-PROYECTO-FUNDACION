@@ -22,7 +22,7 @@ describe("Guardar categoría con Mongo", () => {
         await Category.deleteMany();
     });
 
-    it("debería guardar una nueva categoría", async () => {
+    it("Debería guardar una nueva categoría", async () => {
         const categoryData = {
             name: "Tecnología",
             description: "Categoría para artículos de tecnología y software",
@@ -37,7 +37,7 @@ describe("Guardar categoría con Mongo", () => {
         expect(all).toHaveLength(1);
     });
 
-    it("debería lanzar error si la categoría ya existe", async () => {
+    it("Debería lanzar error si la categoría ya existe", async () => {
         const categoryData = {
             name: "Educación",
             description: "Recursos y materiales educativos en general",

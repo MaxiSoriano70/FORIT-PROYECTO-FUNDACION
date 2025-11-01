@@ -1,8 +1,8 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import Manager from "../manager.mongo.js";
 import Category, { ICategory } from "../../models/category.model.js";
 
-type Lean<T> = Omit<T, keyof Document>;
+type Lean<T> = Omit<T, keyof Document> & { _id: Types.ObjectId };
 
 class CategoryManager extends Manager<ICategory> {
     constructor() {
