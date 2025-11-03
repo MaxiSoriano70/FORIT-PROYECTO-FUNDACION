@@ -14,7 +14,8 @@ class CourseManager extends Manager<ICourse> {
     };
 
     findByCategoryId = async (categoryId: string): Promise<Lean<ICourse>[]> => {
-        return (await this.model.find({ categoryId }).lean()) as Lean<ICourse>[];
+        const courses = await this.model.find({ categoryId }).lean();
+        return courses || [];
     };
 
     findByTeacherId = async (teacherId: string): Promise<Lean<ICourse>[]> => {
