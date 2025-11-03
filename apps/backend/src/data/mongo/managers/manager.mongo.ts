@@ -19,7 +19,7 @@ class Manager<T extends Document> {
         return await this.model.find().lean() as Lean<T>[];
     };
 
-    findById = async (id: string): Promise<Lean<T> | null> => {
+    findById = async (id: string | Types.ObjectId): Promise<Lean<T> | null> => {
         return await this.model.findById(id).lean() as Lean<T> | null;
     };
 
