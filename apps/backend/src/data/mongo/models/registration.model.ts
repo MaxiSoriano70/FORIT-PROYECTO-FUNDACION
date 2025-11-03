@@ -4,6 +4,7 @@ import { RegistrationStatus } from "../../../utils/enums/registrationStatus.js";
 const collection = "registrations";
 
 export interface IRegistration extends Document {
+    _id: Types.ObjectId;
     studentId: Types.ObjectId;
     courseId: Types.ObjectId;
     enrollmentDate: Date;

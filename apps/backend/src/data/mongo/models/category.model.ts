@@ -1,8 +1,9 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
 const collection = "categories";
 
 export interface ICategory extends Document {
+    _id: Types.ObjectId;
     name: string;
     description: string;
     createdAt?: Date;

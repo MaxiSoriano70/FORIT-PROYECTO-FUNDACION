@@ -1,9 +1,10 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 import { UserRole } from "../../../utils/enums/userRole.js";
 
 const collection = "users";
 
 export interface IUser extends Document {
+    _id: Types.ObjectId;
     firstName: string;
     lastName: string;
     email: string;

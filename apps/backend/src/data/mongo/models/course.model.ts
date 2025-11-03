@@ -3,6 +3,7 @@ import { Schema, model, Types, Document } from "mongoose";
 const collection = "courses";
 
 export interface ICourse extends Document {
+    _id: Types.ObjectId;
     name: string;
     description: string;
     durationMonths: number;
