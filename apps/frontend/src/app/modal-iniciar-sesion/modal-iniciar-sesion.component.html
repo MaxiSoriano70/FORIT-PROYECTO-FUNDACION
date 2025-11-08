@@ -1,0 +1,35 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Iniciar Sesión</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label for="email-iniciar-sesion" class="form-label fw-bolder">Email</label>
+            <input type="email" class="form-control bg-input" id="email-iniciar-sesion" placeholder="Ingrese su email"
+                formControlName="email">
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+                Ingrese un email válido
+            </div>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+            <label for="password-iniciar-sesion" class="form-label fw-bolder">Contraseña</label>
+            <input type="password" class="form-control bg-input" id="password-iniciar-sesion"
+                placeholder="Ingrese su contraseña" formControlName="password">
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+                La contraseña no cumple los requisitos
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold">Ingresar</button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">Cancelar</button>
+        </div>
+
+    </form>
+</div>
