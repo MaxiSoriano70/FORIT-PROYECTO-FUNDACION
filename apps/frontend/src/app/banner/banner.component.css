@@ -1,0 +1,104 @@
+:root {
+    --color-1: #223d58;
+    --color-2: #3e6389;
+    --color-3: #6e94b9;
+    --color-4: #b1d1f1;
+    --color-5: #1c7373;
+    --color-6: #005757;
+    --color-7: #b45908;
+    --color-8: #ab5408;
+    --color-fondo: #eaeef4;
+    --color-complementario-I: #ce1d49;
+    --color-complementario-II: #b81941;
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    --color-blanco: #fff;
+    --color-negro: #000;
+}
+
+.banner{
+    height: 450px;
+    background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('/assets/imagenes/Banner.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner article{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-blanco);
+}
+
+.banner article h1{
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+
+.banner article h2{
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+
+.banner article p{
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 0px;
+    font-family: 'Heebo', sans-serif;
+}
+
+@media screen and (max-width: 840px) {
+    .banner{
+        height: 425px;
+    }
+
+    .banner article{
+        width: 95%;
+    }
+
+    .banner article h1{
+        font-size: 2rem;
+    }
+
+    .banner article h2{
+        font-size: 1.8rem;
+    }
+
+    .banner article p{
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 445px) {
+    .banner{
+        height: 400px;
+    }
+
+    .banner article{
+        width: 95%;
+    }
+
+    .banner article h1{
+        font-size: 1.8rem;
+    }
+
+    .banner article h2{
+        font-size: 1.5rem;
+    }
+
+    .banner article p{
+        font-size: 0.8rem;
+    }
+}
