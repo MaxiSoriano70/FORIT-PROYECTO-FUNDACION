@@ -1,1 +1,105 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --color-1: #223d58;
+    --color-2: #3e6389;
+    --color-3: #6e94b9;
+    --color-4: #b1d1f1;
+    --color-5: #1c7373;
+    --color-6: #005757;
+    --color-7: #b45908;
+    --color-8: #ab5408;
+    --color-fondo: #eaeef4;
+    --color-complementario-I : #ce1d49;
+    --color-complementario-II : #b81941;
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    --color-blanco: #fff;
+    --color-negro: #000;
+}
+
+.bg-color-fondo{
+    background-color: var(--color-fondo);
+}
+
+.bg-color-principal {
+    background-color: var(--color-1);
+}
+
+.bg-color-opuesto {
+    background-color: var(--color-complementario-I);
+}
+
+.btn-personalized-1 {
+    background-color: var(--color-5);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-1:hover {
+    background-color: var(--color-6);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-2 {
+    background-color: var(--color-7);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-2:hover {
+    background-color: var(--color-8);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-3 {
+    background-color: var(--color-complementario-I);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-3:hover {
+    background-color: var(--color-complementario-II);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-4 {
+    background-color: var(--color-1);
+    color: var(--color-blanco);
+}
+
+.btn-personalized-4:hover {
+    background-color: var(--color-2);
+    color: var(--color-blanco);
+}
+
+.bg-input {
+    border: 1.8px solid var(--color-3);
+}
+
+.bg-input:focus {
+    border: 2px solid var(--color-3);
+    box-shadow: 0 0 0 0.2rem var(--color-3);
+}
+
+.iconoRadioMacho{
+    color: var(--color-1);
+}
+
+.iconoRadioHembra{
+    color: var(--color-complementario-I);
+}
+
+.error {
+    color: var(--color-danger);
+    font-size: 0.8rem;
+    margin: 5px 0px;
+    padding: 0;
+    visibility: hidden;
+    display: none;
+}
+
+.visible {
+    visibility: visible;
+    display: block;
+}
+
+.mat-typography{
+    background-color: var(--color-fondo);
+}
