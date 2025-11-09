@@ -2,23 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { authManager } from "../../data/mongo/managers/auth/auth.manager.js";
 import { CustomError } from "../../middlewares/errorHandler.mid.js";
 
-export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const user = await authManager.register(req.body);
-        res.status(201).json({
-            message: "Usuario registrado correctamente",
-            data: user,
-            method: req.method,
-            url: req.url,
-        });
-    } catch (error: unknown) {
-        const err = error as CustomError;
-        const msg = err.message || "Error interno del servidor";
-        const status = msg === "El email ya está registrado" ? 400 : 500;
-        next({ message: msg, status });
-    }
-};
-
 export const login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { email, password } = req.body;
