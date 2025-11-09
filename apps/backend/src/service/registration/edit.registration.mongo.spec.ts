@@ -32,7 +32,8 @@ describe("Editar inscripción con Mongo", () => {
             lastName: "Pérez",
             email: "juan@example.com",
             password: "Pass123!",
-            role: UserRole.STUDENT
+            role: UserRole.STUDENT,
+            phone: "1111111111",
         });
 
         const admin = await User.create({
@@ -40,12 +41,13 @@ describe("Editar inscripción con Mongo", () => {
             lastName: "Root",
             email: "admin@example.com",
             password: "Pass123!",
-            role: UserRole.ADMIN
+            role: UserRole.ADMIN,
+            phone: "2222222222",
         });
 
         const course = await Course.create({
             name: "Curso Node.js",
-            description: "Backend",
+            description: "Backend avanzado",
             durationMonths: 6,
             schedule: "Lunes 18-20hs",
             startDate: new Date("2025-01-01"),
@@ -71,7 +73,8 @@ describe("Editar inscripción con Mongo", () => {
             lastName: "Gómez",
             email: "ana@example.com",
             password: "Pass123!",
-            role: UserRole.STUDENT
+            role: UserRole.STUDENT,
+            phone: "3333333333",
         });
 
         const admin = await User.create({
@@ -79,12 +82,13 @@ describe("Editar inscripción con Mongo", () => {
             lastName: "Root",
             email: "admin@example.com",
             password: "Pass123!",
-            role: UserRole.ADMIN
+            role: UserRole.ADMIN,
+            phone: "4444444444",
         });
 
         const course1 = await Course.create({
             name: "Curso 1",
-            description: "Curso 1",
+            description: "Curso 1 avanzado",
             durationMonths: 3,
             schedule: "Lunes",
             startDate: new Date(),
@@ -98,7 +102,7 @@ describe("Editar inscripción con Mongo", () => {
 
         const course2 = await Course.create({
             name: "Curso 2",
-            description: "Curso 2",
+            description: "Curso 2 avanzado",
             durationMonths: 5,
             schedule: "Martes",
             startDate: new Date(),

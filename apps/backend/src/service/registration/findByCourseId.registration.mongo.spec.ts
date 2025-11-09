@@ -5,10 +5,10 @@ import User from "../../data/mongo/models/user.model.js";
 import Course from "../../data/mongo/models/course.model.js";
 import Registration from "../../data/mongo/models/registration.model.js";
 import { saveRegistration } from "./save.registration.mongo.js";
-import { findAllRegistrations } from "./findAll.registration.mongo.js";
+import { findRegistrationsByCourseId } from "./findByCourseId.registration.mongo.js";
 import { UserRole } from "../../utils/enums/userRole.js";
 
-describe("Obtener todas las inscripciones con Mongo", () => {
+describe("Buscar inscripciones por courseId con Mongo", () => {
     let mongoServer: MongoMemoryServer;
 
     beforeAll(async () => {
@@ -25,24 +25,24 @@ describe("Obtener todas las inscripciones con Mongo", () => {
         await Promise.all([
             User.deleteMany(),
             Course.deleteMany(),
-            Registration.deleteMany()
+            Registration.deleteMany(),
         ]);
     });
 
-    it("Debería devolver un arreglo vacío si no hay inscripciones", async () => {
-        const regs = await findAllRegistrations();
-        expect(regs).toBeInstanceOf(Array);
-        expect(regs).toHaveLength(0);
+    it("Debería devolver un array vacío si el curso no tiene inscripciones", async () => {
+        const fakeCourse = new mongoose.Types.ObjectId();
+        const result = await findRegistrationsByCourseId(fakeCourse);
+        expect(result).toEqual([]);
     });
 
-    it("Debería devolver todas las inscripciones guardadas", async () => {
+    it("Debería devolver las inscripciones de un curso existente", async () => {
         const student1 = await User.create({
             firstName: "Juan",
             lastName: "Pérez",
             email: "juan@example.com",
             password: "Pass123!",
             role: UserRole.STUDENT,
-            phone: "1111111111",
+            phone: "111111111",
         });
 
         const student2 = await User.create({
@@ -51,7 +51,7 @@ describe("Obtener todas las inscripciones con Mongo", () => {
             email: "ana@example.com",
             password: "Pass123!",
             role: UserRole.STUDENT,
-            phone: "2222222222",
+            phone: "222222222",
         });
 
         const admin = await User.create({
@@ -60,31 +60,30 @@ describe("Obtener todas las inscripciones con Mongo", () => {
             email: "admin@example.com",
             password: "Pass123!",
             role: UserRole.ADMIN,
-            phone: "3333333333",
+            phone: "333333333",
         });
 
         const course = await Course.create({
-            name: "Curso de Node.js",
-            description: "Backend completo y avanzado",
-            durationMonths: 6,
-            schedule: "Lunes 18-20hs",
-            startDate: new Date("2025-01-01"),
+            name: "Curso de Angular",
+            description: "Frontend con Angular",
+            durationMonths: 4,
+            schedule: "Miércoles 18-20hs",
+            startDate: new Date("2025-03-01"),
             endDate: new Date("2025-06-30"),
-            pricePerMonth: 150,
+            pricePerMonth: 250,
             categoryId: new mongoose.Types.ObjectId(),
             adminId: admin._id,
-            maxCapacity: 50,
-            enrolledCount: 0
+            maxCapacity: 40,
+            enrolledCount: 0,
         });
 
         await saveRegistration({ studentId: student1._id, courseId: course._id });
         await saveRegistration({ studentId: student2._id, courseId: course._id });
 
-        const allRegs = await findAllRegistrations();
+        const found = await findRegistrationsByCourseId(course._id);
 
-        expect(allRegs).toHaveLength(2);
-        const studentIds = allRegs.map(r => r.studentId.toString());
-        expect(studentIds).toContain(student1._id.toString());
-        expect(studentIds).toContain(student2._id.toString());
+        expect(found.length).toBe(2);
+        expect(found[0]).toBeDefined();
+        expect(found[0]!.courseId.toString()).toBe(course._id.toString());
     });
 });

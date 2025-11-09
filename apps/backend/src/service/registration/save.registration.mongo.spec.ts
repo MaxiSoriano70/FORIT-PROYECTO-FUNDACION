@@ -35,7 +35,8 @@ describe("Guardar inscripción con Mongo", () => {
             lastName: "Pérez",
             email: "juan@example.com",
             password: "Pass123!",
-            role: UserRole.STUDENT
+            role: UserRole.STUDENT,
+            phone: "1111111111",
         });
 
         const admin = await User.create({
@@ -43,12 +44,13 @@ describe("Guardar inscripción con Mongo", () => {
             lastName: "Root",
             email: "admin@example.com",
             password: "Pass123!",
-            role: UserRole.ADMIN
+            role: UserRole.ADMIN,
+            phone: "2222222222",
         });
 
         const course = await Course.create({
             name: "Curso de Node.js",
-            description: "Backend con Node",
+            description: "Backend completo con Node.js",
             durationMonths: 6,
             schedule: "Lunes 18-20hs",
             startDate: new Date("2025-01-01"),
@@ -83,7 +85,7 @@ describe("Guardar inscripción con Mongo", () => {
         const fakeId = new mongoose.Types.ObjectId();
         const course = await Course.create({
             name: "Curso de prueba",
-            description: "Backend",
+            description: "Curso de backend completo",
             durationMonths: 3,
             schedule: "Martes 18hs",
             startDate: new Date(),
@@ -105,12 +107,13 @@ describe("Guardar inscripción con Mongo", () => {
             lastName: "García",
             email: "teacher@example.com",
             password: "Pass123!",
-            role: UserRole.TEACHER
+            role: UserRole.TEACHER,
+            phone: "3333333333",
         });
 
         const course = await Course.create({
             name: "Curso de prueba",
-            description: "Backend",
+            description: "Curso de backend completo",
             durationMonths: 3,
             schedule: "Martes 18hs",
             startDate: new Date(),
@@ -132,7 +135,8 @@ describe("Guardar inscripción con Mongo", () => {
             lastName: "Pérez",
             email: "juan2@example.com",
             password: "Pass123!",
-            role: UserRole.STUDENT
+            role: UserRole.STUDENT,
+            phone: "1111111111",
         });
 
         const fakeCourseId = new mongoose.Types.ObjectId();

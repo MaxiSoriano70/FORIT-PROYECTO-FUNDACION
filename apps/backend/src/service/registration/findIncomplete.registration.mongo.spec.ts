@@ -5,10 +5,11 @@ import User from "../../data/mongo/models/user.model.js";
 import Course from "../../data/mongo/models/course.model.js";
 import Registration from "../../data/mongo/models/registration.model.js";
 import { saveRegistration } from "./save.registration.mongo.js";
-import { deleteRegistration } from "./delete.registration.mongo.js";
 import { UserRole } from "../../utils/enums/userRole.js";
+import { RegistrationStatus } from "../../utils/enums/registrationStatus.js";
+import { findIncomplete } from "./findInComplete.registration.mongo.js";
 
-describe("Eliminar inscripción con Mongo", () => {
+describe("Obtener inscripciones incompletas con Mongo", () => {
     let mongoServer: MongoMemoryServer;
 
     beforeAll(async () => {
@@ -25,7 +26,8 @@ describe("Eliminar inscripción con Mongo", () => {
         await Promise.all([User.deleteMany(), Course.deleteMany(), Registration.deleteMany()]);
     });
 
-    it("Debería eliminar una inscripción existente", async () => {
+    it("Debería devolver solo inscripciones con courseFinished=false", async () => {
+        // Crear usuario y curso
         const student = await User.create({
             firstName: "Juan",
             lastName: "Pérez",
@@ -46,11 +48,11 @@ describe("Eliminar inscripción con Mongo", () => {
 
         const course = await Course.create({
             name: "Curso Node.js",
-            description: "Backend avanzado",
+            description: "Backend completo con Node.js",
             durationMonths: 6,
             schedule: "Lunes 18-20hs",
-            startDate: new Date("2025-01-01"),
-            endDate: new Date("2025-06-30"),
+            startDate: new Date(),
+            endDate: new Date(),
             pricePerMonth: 150,
             categoryId: new mongoose.Types.ObjectId(),
             adminId: admin._id,
@@ -58,20 +60,35 @@ describe("Eliminar inscripción con Mongo", () => {
             enrolledCount: 0
         });
 
-        const registration = await saveRegistration({ studentId: student._id, courseId: course._id });
+        // Inscripción incompleta
+        const incompleteReg = await saveRegistration({ studentId: student._id, courseId: course._id });
 
-        const deleted = await deleteRegistration(registration._id.toString());
+        // Inscripción completa manualmente
+        const completeReg = new Registration({
+            studentId: student._id,
+            courseId: course._id,
+            enrollmentDate: new Date(),
+            status: RegistrationStatus.COMPLETADO,
+            courseFinished: true,
+            totalQuotas: 6,
+            paidQuotas: 6,
+            pricePerQuota: 150,
+            totalAmount: 900
+        });
+        await completeReg.save();
 
-        expect(deleted).not.toBeNull();
-        expect(deleted?._id.toString()).toBe(registration._id.toString());
+        const incompletes = await findIncomplete();
 
-        const all = await Registration.find();
-        expect(all).toHaveLength(0);
+        // Type assertion para TypeScript
+        const firstReg = incompletes[0] as typeof incompletes[0] & { _id: string };
+
+        expect(incompletes).toHaveLength(1);
+        expect(firstReg._id.toString()).toBe(incompleteReg._id.toString());
+        expect(firstReg.courseFinished).toBe(false);
     });
 
-    it("Debería devolver null si la inscripción no existe", async () => {
-        const fakeId = new mongoose.Types.ObjectId();
-        const deleted = await deleteRegistration(fakeId.toString());
-        expect(deleted).toBeNull();
+    it("Debería devolver array vacío si no hay inscripciones incompletas", async () => {
+        const regs = await findIncomplete();
+        expect(regs).toEqual([]);
     });
 });

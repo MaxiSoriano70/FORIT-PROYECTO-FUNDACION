@@ -2,7 +2,7 @@ import Registration, { IRegistration } from "../../data/mongo/models/registratio
 import { userManager } from "../../data/mongo/managers/user/user.manager.js";
 import { courseManager } from "../../data/mongo/managers/course/course.manager.js";
 import { UserRole } from "../../utils/enums/userRole.js";
-import { RegistrationStatus } from "@backend/utils/index.js";
+import { RegistrationStatus } from '../../../dist/utils/enums/registrationStatus';
 
 export async function saveRegistration(data: Partial<IRegistration>): Promise<IRegistration> {
     if (!data.studentId) throw new Error("Debe proporcionar studentId");
