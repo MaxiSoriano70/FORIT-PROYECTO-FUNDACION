@@ -10,7 +10,7 @@ export interface IUser extends Document {
     email: string;
     password: string;
     phone: string;
-    address: string;
+    address?: string;
     role: UserRole;
     profileImage?: string;
     createdAt?: Date;
@@ -71,7 +71,7 @@ const userSchema = new Schema<IUser>(
         },
         address: {
             type: String,
-            required: true,
+            required: false,
             minlength: 3,
             validate: {
                 validator: (v: string) =>

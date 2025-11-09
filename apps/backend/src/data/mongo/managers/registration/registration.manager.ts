@@ -63,5 +63,5 @@ class RegistrationManager extends Manager<IRegistration> {
 
 const registrationManager = new RegistrationManager();
 
-export { registrationManager };
+export { registrationManager, Lean };
 export default RegistrationManager;
