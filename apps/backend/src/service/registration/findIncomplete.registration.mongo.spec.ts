@@ -7,7 +7,7 @@ import Registration from "../../data/mongo/models/registration.model.js";
 import { saveRegistration } from "./save.registration.mongo.js";
 import { UserRole } from "../../utils/enums/userRole.js";
 import { RegistrationStatus } from "../../utils/enums/registrationStatus.js";
-import { findIncomplete } from "./findInComplete.registration.mongo.js";
+import { findIncomplete } from "./findIncomplete.registration.mongo.js";
 
 describe("Obtener inscripciones incompletas con Mongo", () => {
     let mongoServer: MongoMemoryServer;
