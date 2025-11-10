@@ -23,7 +23,7 @@ const InformationSchema = new Schema<IInformation>(
             minlength: 2,
             validate: {
                 validator: (v: string) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,}$/.test(v),
-                message: () => `El nombre debe tener al menos 2 letras y solo puede contener letras y espacios.`,
+                message: "El nombre debe tener al menos 2 letras y solo puede contener letras y espacios.",
             },
         },
         lastName: {
@@ -32,7 +32,7 @@ const InformationSchema = new Schema<IInformation>(
             minlength: 2,
             validate: {
                 validator: (v: string) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,}$/.test(v),
-                message: () => `El apellido debe tener al menos 2 letras y solo puede contener letras y espacios.`,
+                message: "El apellido debe tener al menos 2 letras y solo puede contener letras y espacios.",
             },
         },
         email: {
