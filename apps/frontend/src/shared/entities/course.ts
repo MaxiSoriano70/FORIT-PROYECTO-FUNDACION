@@ -12,6 +12,7 @@ export interface Course {
     teacherId?: string | null;
     maxCapacity: number;
     enrolledCount: number;
+    imageUrl?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }

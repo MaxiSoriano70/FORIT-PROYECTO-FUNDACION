@@ -5,7 +5,7 @@ export enum RoutePaths{
     CURSOS = "cursos",
     ESTUDIANTES = "estudiantes",
     INSCRIPCIONES = "inscripciones",
-    ESTUDIANTEDETALLE = "alumnodetalle",
+    ALUMNODETALLE = "alumnodetalle",
     USUARIODETALLE = "usuariodetalle",
     ERROR404 = "**"
 }
