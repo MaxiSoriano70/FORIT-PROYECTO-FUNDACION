@@ -1,0 +1,52 @@
+<app-banner></app-banner>
+
+<section class="sCursos">
+    <article class="marca-titulo">
+        <h3 appBigtittle>Cursos</h3>
+    </article>
+
+    <div *ngIf="courses$ | async as courses; else loading">
+        <article class="aCursos">
+            <div *ngFor="let course of courses" class="card text-center mb-3 shadow-sm" style="width: 20rem;">
+                <img [src]="course.imageUrl || 'https://i.ibb.co/2kR9YQk/default-course.png'" class="card-img-top"
+                    [alt]="course.name" width="320" height="200" />
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ course.name }}</h5>
+
+                    <p class="mb-1">
+                        <strong>Precio/mes:</strong>
+                        {{ course.pricePerMonth | currency: 'ARS':'symbol' }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Inicio:</strong>
+                        {{ course.startDate | date: 'dd/MM/yyyy' }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Fin:</strong>
+                        {{ course.endDate | date: 'dd/MM/yyyy' }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Cupos:</strong>
+                        {{ course.maxCapacity - course.enrolledCount }} disponibles
+                    </p>
+
+                    <p class="card-text mt-2 text-secondary">
+                        {{ course.description }}
+                    </p>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+
+</section>
+
+<app-rolling-code></app-rolling-code>
+
+<app-footer></app-footer>

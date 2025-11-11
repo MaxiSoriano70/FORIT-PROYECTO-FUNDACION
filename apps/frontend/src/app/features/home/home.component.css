@@ -1,0 +1,78 @@
+:root {
+    --color-1: #223d58;
+    --color-2: #3e6389;
+    --color-3: #6e94b9;
+    --color-4: #b1d1f1;
+    --color-5: #1c7373;
+    --color-6: #005757;
+    --color-7: #b45908;
+    --color-8: #ab5408;
+    --color-fondo: #eaeef4;
+    --color-complementario-I: #ce1d49;
+    --color-complementario-II: #b81941;
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    --color-blanco: #fff;
+    --color-negro: #000;
+}
+
+.sCursos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+h3 {
+    text-transform: uppercase;
+}
+
+.aCursos {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px 20px;
+}
+
+.aCursos .card {
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    border: 1px solid var(--color-3);
+    border-radius: 12px;
+    background-color: var(--color-blanco);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    animation-name: show;
+    animation-timeline: view();
+    animation-range: entry 15% cover 40%;
+    animation-fill-mode: both;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aCursos .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-color: var(--color-2);
+}
+
+.aCursos .card-title {
+    color: var(--color-1);
+    font-weight: bold;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+        transform: scale(0.1);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
