@@ -1,0 +1,48 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Editar Categoría</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+
+        <!-- Nombre -->
+        <div class="mb-3">
+            <label for="nombreCategoria" class="form-label fw-bolder">Nombre:</label>
+            <input formControlName="name" type="text" class="form-control bg-input" id="nombreCategoria"
+                placeholder="Ingrese el nombre de la categoría..." />
+            <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched" class="text-danger">
+                <small *ngIf="categoryForm.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="categoryForm.get('name')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+                <small *ngIf="categoryForm.get('name')?.errors?.['maxlength']">No puede superar los 50
+                    caracteres.</small>
+                <small *ngIf="categoryForm.get('name')?.errors?.['pattern']">Solo se permiten letras, números y
+                    comas.</small>
+            </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-3">
+            <label for="descripcionCategoria" class="form-label fw-bolder">Descripción:</label>
+            <textarea formControlName="description" class="form-control bg-input" id="descripcionCategoria"
+                placeholder="Ingrese una descripción para la categoría..." rows="3"></textarea>
+            <div *ngIf="categoryForm.get('description')?.invalid && categoryForm.get('description')?.touched"
+                class="text-danger">
+                <small *ngIf="categoryForm.get('description')?.errors?.['required']">La descripción es
+                    obligatoria.</small>
+                <small *ngIf="categoryForm.get('description')?.errors?.['minlength']">Debe tener al menos 10
+                    caracteres.</small>
+                <small *ngIf="categoryForm.get('description')?.errors?.['maxlength']">No puede superar los 200
+                    caracteres.</small>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold" aria-label="Guardar">
+                Guardar cambios
+            </button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">Cancelar</button>
+        </div>
+    </form>
+</div>
