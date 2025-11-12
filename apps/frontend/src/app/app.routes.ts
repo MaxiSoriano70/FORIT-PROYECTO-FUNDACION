@@ -8,7 +8,7 @@ export const routes: Routes = [
         loadComponent: () =>
         import('./features/home/home.component').then(m => m.HomeComponent)
     },
-    {
+    /*{
         path: RoutePaths.TIPS,
         loadComponent: () =>
         import('./features/tips/tips.component').then(m => m.TipsComponent)
@@ -53,7 +53,7 @@ export const routes: Routes = [
     path: RoutePaths.ERROR404,
     loadComponent: () =>
         import('./features/error404/error404.component').then(m => m.Error404Component)
-    },
+    },*/
     {
         path: '**',
         redirectTo: RoutePaths.ERROR404

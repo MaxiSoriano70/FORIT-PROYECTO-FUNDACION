@@ -6,7 +6,7 @@
                 <p>Fundación RRHH</p>
             </a>
         </article>
-        <nav class="menu">
+        <nav class="menu" [class.open]="isMenuVisible">
             <article class="head">
                 <div class="logo">
                     <a [routerLink]="[routePaths.HOME]" aria-label="Logo y nombre">
@@ -14,8 +14,9 @@
                         <p>Fundación RRHH</p>
                     </a>
                 </div>
-                <button type="button" class="close-menu-btn" aria-label="Cerrar menu"><i
-                        class="fa-regular fa-circle-xmark"></i></button>
+                <button type="button" class="close-menu-btn" aria-label="Cerrar menu" (click)="cerrarMenu()">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </button>
             </article>
             <ul>
                 <li>
@@ -76,7 +77,9 @@
             <button type="button" class="login-btn" *ngIf="usuario$ | async" (click)="cerrarSesion()">
                 <i class="fa-solid fa-door-open"></i> Cerrar Sesión
             </button>
-            <button type="button" class="open-menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+            <button type="button" class="open-menu-btn" aria-label="Menu" (click)="abrirMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </article>
     </section>
 </header>

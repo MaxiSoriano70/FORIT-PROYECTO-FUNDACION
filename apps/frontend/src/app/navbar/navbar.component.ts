@@ -45,25 +45,29 @@ export class NavbarComponent implements OnInit {
         if (usuario && typeof localStorage !== 'undefined') {
           localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
           this.store.dispatch(iniciarSesion({ usuario }));
+
           swal({
-            title: `¡Bienvenido, ${usuario.name} ${usuario.surname}!`,
+            title: `¡Bienvenido, ${usuario.email}!`,
             icon: 'success',
             timer: 2000,
             buttons: false
           });
         }
       },
-      () => {
-        swal({
-          title: 'Error',
-          text: 'No se inició sesión',
-          icon: 'error',
-          timer: 2000,
-          buttons: false
-        });
+      (reason) => {
+        if (reason !== 'cancel' && reason !== 'Cross click' && reason !== 0) {
+          swal({
+            title: 'Error',
+            text: 'No se inició sesión',
+            icon: 'error',
+            timer: 2000,
+            buttons: false
+          });
+        }
       }
     );
   }
+
 
   cerrarSesion() {
     swal({
@@ -105,5 +109,15 @@ export class NavbarComponent implements OnInit {
       },
       () => { }
     );
+  }
+
+  isMenuVisible = false;
+
+  abrirMenu() {
+    this.isMenuVisible = true;
+  }
+
+  cerrarMenu() {
+    this.isMenuVisible = false;
   }
 }

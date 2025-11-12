@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { LoginApiService } from './login-api.service';
+import { User } from '../../shared/entities/user';
 declare const swal: any;
 
 @Component({
   selector: 'app-modal-iniciar-sesion',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, NgbModule],
   templateUrl: './modal-iniciar-sesion.component.html',
   styleUrls: ['./modal-iniciar-sesion.component.css']
@@ -15,6 +18,7 @@ export class ModalIniciarSesionComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private loginApi: LoginApiService,
     public activeModal: NgbActiveModal
   ) {}
 
@@ -30,20 +34,28 @@ export class ModalIniciarSesionComponent implements OnInit {
     });
   }
 
-  close() {
-    this.activeModal.dismiss();
+  close(): void {
+    this.activeModal.dismiss('cancel');
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      console.log('Intentando iniciar sesión con:', { email, password });
-
-      // 🔹 Esto es solo un placeholder temporal
-      swal('Info', 'Simulación de login exitosa (placeholder)', 'success');
-      this.activeModal.close({ email }); // Simula el cierre con datos
-    } else {
+  onSubmit(): void {
+    if (!this.loginForm.valid) {
       swal('Error', 'Complete correctamente el formulario', 'error');
+      return;
     }
+
+    const { email, password } = this.loginForm.value;
+
+    this.loginApi.login(email, password).subscribe({
+      next: (res) => {
+        const usuario: User = res.data; // 👈 aseguramos que es del tipo User
+        swal('Éxito', res.message || 'Inicio de sesión exitoso', 'success');
+        this.activeModal.close(usuario);
+      },
+      error: (err) => {
+        console.error('Error en login:', err);
+        swal('Error', err.error?.message || 'Credenciales incorrectas', 'error');
+      }
+    });
   }
 }

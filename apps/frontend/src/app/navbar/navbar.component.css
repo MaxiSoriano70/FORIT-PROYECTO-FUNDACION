@@ -247,7 +247,7 @@ header .contenedor{
         display: flex;
         align-items: center;
         justify-content: end;
-        margin: 5px 0px;
+        margin: 5px;
     }
 
     .contenedor .menu .head .logo{
