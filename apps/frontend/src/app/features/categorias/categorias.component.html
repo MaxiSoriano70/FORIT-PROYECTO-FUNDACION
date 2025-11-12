@@ -1,0 +1,11 @@
+<app-toolbar-category (addCategory)="onCategoryAdded($event)"></app-toolbar-category>
+
+<div *ngIf="categories$ | async as categories; else loading">
+    <app-table-categories [categories]="categories" (editCategory)="openEditModal($event)"
+        (deleteCategory)="onCategoryDeleted($event)">
+    </app-table-categories>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
