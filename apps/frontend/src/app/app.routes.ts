@@ -8,6 +8,12 @@ export const routes: Routes = [
         loadComponent: () =>
         import('./features/home/home.component').then(m => m.HomeComponent)
     },
+    {
+        path: RoutePaths.CATEGORIAS,
+        canActivate: [ruteoGuard(['ADMIN'])],
+        loadComponent: () =>
+        import('./features/categorias/categorias.component').then(m => m.CategoriasComponent)
+    },
     /*{
         path: RoutePaths.TIPS,
         loadComponent: () =>
