@@ -16,6 +16,7 @@ export interface ICourse extends Document {
     teacherId?: Types.ObjectId | null;
     maxCapacity: number;
     enrolledCount: number;
+    imageUrl?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -129,6 +130,15 @@ const courseSchema = new Schema<ICourse>(
                 validator: Number.isInteger,
                 message: (props: any) =>
                     `${props.value} no es un número entero válido para cantidad de inscriptos.`,
+            },
+        },
+        imageUrl: {
+            type: String,
+            trim: true,
+            validate: {
+                validator: (v: string) =>
+                    /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i.test(v),
+                message: () => `Debe ser una URL válida de imagen.`,
             },
         },
     },

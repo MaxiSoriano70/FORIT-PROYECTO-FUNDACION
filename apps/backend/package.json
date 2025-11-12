@@ -11,16 +11,18 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.6",
+    "@types/cors": "^2.8.19",
     "@types/express": "5.0.3",
     "@types/mongoose": "5.11.96",
     "@types/node": "^22.7.4",
+    "mongodb-memory-server": "^10.1.4",
     "tsx": "4.19.2",
     "typescript": "^5.9.3",
-    "vitest": "^2.1.1",
-    "mongodb-memory-server": "^10.1.4"
+    "vitest": "^2.1.1"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "17.2.3",
     "express": "5.1.0"
   }
