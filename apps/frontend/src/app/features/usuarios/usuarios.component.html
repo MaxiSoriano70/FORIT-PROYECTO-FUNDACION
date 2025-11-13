@@ -1,0 +1,11 @@
+<app-toolbar-user (addUser)="onUserAdded($event)"></app-toolbar-user>
+
+<div *ngIf="users$ | async as users; else loading">
+    <app-table-users [users]="users" (editUser)="openEditModal($event)" (deleteUser)="onUserDeleted($event)"
+        (detailUser)="openDetailPage($event)"> <!-- 👈 este -->
+    </app-table-users>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
