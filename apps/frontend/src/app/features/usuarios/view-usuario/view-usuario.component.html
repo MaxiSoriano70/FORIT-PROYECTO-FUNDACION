@@ -7,12 +7,13 @@
 
     <div class="card mt-4 mb-4" style="width: 60%;">
         <div class="card-body">
-            <h5 class="card-title text-center">{{ user?.name }} {{ user?.surname }}</h5>
+            <h5 class="card-title text-center">
+                {{ user?.firstName }} {{ user?.lastName }}
+            </h5>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Edad: {{ user?.age }}</li>
-            <li class="list-group-item">Dni: {{ user?.dni }}</li>
-            <li class="list-group-item">Promedio: {{ user?.average }}</li>
+            <li class="list-group-item">Teléfono: {{ user?.phone }}</li>
+            <li class="list-group-item">Dirección: {{ user?.address }}</li>
             <li class="list-group-item">Email: {{ user?.email }}</li>
             <li class="list-group-item">Rol: {{ user?.role }}</li>
         </ul>

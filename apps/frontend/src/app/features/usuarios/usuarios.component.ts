@@ -101,6 +101,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   openDetailPage(user: User): void {
-    this.router.navigate(['/usuarios/view'], { state: { user } });
+    this.router.navigate(['/usuariodetalle'], { state: { user } });
   }
 }

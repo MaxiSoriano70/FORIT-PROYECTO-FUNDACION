@@ -2,7 +2,7 @@
 
 <div *ngIf="users$ | async as users; else loading">
     <app-table-users [users]="users" (editUser)="openEditModal($event)" (deleteUser)="onUserDeleted($event)"
-        (detailUser)="openDetailPage($event)"> <!-- 👈 este -->
+        (detailUser)="openDetailPage($event)">
     </app-table-users>
 </div>
 

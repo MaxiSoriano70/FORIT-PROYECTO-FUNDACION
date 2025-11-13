@@ -20,6 +20,12 @@ export const routes: Routes = [
         loadComponent: () =>
         import('./features/usuarios/usuarios.component').then(m => m.UsuariosComponent)
     },
+    {
+        path: RoutePaths.USUARIODETALLE,
+        canActivate: [ruteoGuard(['ADMIN'])],
+        loadComponent: () =>
+        import('./features/usuarios/view-usuario/view-usuario.component').then(m => m.ViewUsuarioComponent)
+    },
     /*{
         path: RoutePaths.TIPS,
         loadComponent: () =>
@@ -48,12 +54,6 @@ export const routes: Routes = [
         canActivate: [ruteoGuard(['ADMIN'])],
         loadComponent: () =>
         import('./features/alumnos/view-student/view-student.component').then(m => m.ViewStudentComponent)
-    },
-    {
-        path: RoutePaths.USUARIODETALLE,
-        canActivate: [ruteoGuard(['ADMIN'])],
-        loadComponent: () =>
-        import('./features/usuarios/view-usuario/view-usuario.component').then(m => m.ViewUsuarioComponent)
     },
     {
     path: RoutePaths.ERROR404,
