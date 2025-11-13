@@ -1,0 +1,85 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Editar Usuario</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <!-- NOMBRE -->
+        <div class="mb-3">
+            <label for="firstName" class="form-label fw-bolder">Nombre:</label>
+            <input formControlName="firstName" type="text" class="form-control bg-input" id="firstName"
+                placeholder="Ingrese nombre..." />
+            <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched" class="text-danger">
+                <small *ngIf="userForm.get('firstName')?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="userForm.get('firstName')?.errors?.['minlength']">Debe tener al menos 3
+                    caracteres.</small>
+                <small *ngIf="userForm.get('firstName')?.errors?.['pattern']">Solo letras y espacios.</small>
+            </div>
+        </div>
+
+        <!-- APELLIDO -->
+        <div class="mb-3">
+            <label for="lastName" class="form-label fw-bolder">Apellido:</label>
+            <input formControlName="lastName" type="text" class="form-control bg-input" id="lastName"
+                placeholder="Ingrese apellido..." />
+            <div *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched" class="text-danger">
+                <small *ngIf="userForm.get('lastName')?.errors?.['required']">El apellido es obligatorio.</small>
+                <small *ngIf="userForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+                <small *ngIf="userForm.get('lastName')?.errors?.['pattern']">Solo letras y espacios.</small>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label for="email" class="form-label fw-bolder">Email:</label>
+            <input formControlName="email" type="email" class="form-control bg-input" id="email"
+                placeholder="ejemplo@correo.com" />
+            <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+                <small *ngIf="userForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
+                <small *ngIf="userForm.get('email')?.errors?.['email']">Debe ser un email válido.</small>
+            </div>
+        </div>
+
+        <!-- TELÉFONO -->
+        <div class="mb-3">
+            <label for="phone" class="form-label fw-bolder">Teléfono:</label>
+            <input formControlName="phone" type="text" class="form-control bg-input" id="phone"
+                placeholder="Ingrese teléfono..." />
+            <div *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="text-danger">
+                <small *ngIf="userForm.get('phone')?.errors?.['required']">El teléfono es obligatorio.</small>
+                <small *ngIf="userForm.get('phone')?.errors?.['pattern']">Debe contener solo números (8 a 15
+                    dígitos).</small>
+            </div>
+        </div>
+
+        <!-- DIRECCIÓN -->
+        <div class="mb-3">
+            <label for="address" class="form-label fw-bolder">Dirección:</label>
+            <input formControlName="address" type="text" class="form-control bg-input" id="address"
+                placeholder="Ingrese dirección..." />
+            <div *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched" class="text-danger">
+                <small *ngIf="userForm.get('address')?.errors?.['required']">La dirección es obligatoria.</small>
+                <small *ngIf="userForm.get('address')?.errors?.['minlength']">Debe tener al menos 5 caracteres.</small>
+            </div>
+        </div>
+
+        <!-- ROL -->
+        <div class="mb-3">
+            <label for="role" class="form-label fw-bolder">Rol:</label>
+            <select formControlName="role" id="role" class="form-select bg-input">
+                <option *ngFor="let rol of roleOptions" [value]="rol">{{ rol }}</option>
+            </select>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold" aria-label="Guardar">
+                Guardar cambios
+            </button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">
+                Cancelar
+            </button>
+        </div>
+    </form>
+</div>
