@@ -14,16 +14,16 @@ export const routes: Routes = [
         loadComponent: () =>
         import('./features/categorias/categorias.component').then(m => m.CategoriasComponent)
     },
-    /*{
-        path: RoutePaths.TIPS,
-        loadComponent: () =>
-        import('./features/tips/tips.component').then(m => m.TipsComponent)
-    },
     {
         path: RoutePaths.USUARIOS,
         canActivate: [ruteoGuard(['ADMIN'])],
         loadComponent: () =>
         import('./features/usuarios/usuarios.component').then(m => m.UsuariosComponent)
+    },
+    /*{
+        path: RoutePaths.TIPS,
+        loadComponent: () =>
+        import('./features/tips/tips.component').then(m => m.TipsComponent)
     },
     {
         path: RoutePaths.ALUMNOS,
