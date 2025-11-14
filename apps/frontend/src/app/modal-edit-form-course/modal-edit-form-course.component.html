@@ -1,0 +1,105 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Editar Curso</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+        <!-- NOMBRE -->
+        <div class="mb-3">
+            <label for="name" class="form-label fw-bolder">Nombre:</label>
+            <input formControlName="name" type="text" class="form-control bg-input" id="name"
+                placeholder="Ingrese el nombre del curso..." />
+            <div *ngIf="courseForm.get('name')?.invalid && courseForm.get('name')?.touched" class="text-danger">
+                <small *ngIf="courseForm.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="courseForm.get('name')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+            </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="mb-3">
+            <label for="description" class="form-label fw-bolder">Descripción:</label>
+            <textarea formControlName="description" class="form-control bg-input" id="description"
+                placeholder="Ingrese una descripción..." rows="3"></textarea>
+            <div *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched"
+                class="text-danger">
+                <small *ngIf="courseForm.get('description')?.errors?.['required']">La descripción es
+                    obligatoria.</small>
+                <small *ngIf="courseForm.get('description')?.errors?.['minlength']">Debe tener al menos 10
+                    caracteres.</small>
+            </div>
+        </div>
+
+        <!-- DURACIÓN -->
+        <div class="mb-3">
+            <label for="durationMonths" class="form-label fw-bolder">Duración (meses):</label>
+            <input formControlName="durationMonths" type="number" class="form-control bg-input" id="durationMonths"
+                placeholder="Ingrese la duración..." />
+        </div>
+
+        <!-- HORARIO -->
+        <div class="mb-3">
+            <label for="schedule" class="form-label fw-bolder">Horario:</label>
+            <input formControlName="schedule" type="text" class="form-control bg-input" id="schedule"
+                placeholder="Ej: Lunes y Miércoles de 18:00 a 20:00" />
+        </div>
+
+        <!-- FECHAS -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="startDate" class="form-label fw-bolder">Inicio:</label>
+                <input formControlName="startDate" type="date" class="form-control bg-input" id="startDate" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="endDate" class="form-label fw-bolder">Fin:</label>
+                <input formControlName="endDate" type="date" class="form-control bg-input" id="endDate" />
+            </div>
+        </div>
+
+        <!-- PRECIO -->
+        <div class="mb-3">
+            <label for="pricePerMonth" class="form-label fw-bolder">Precio por mes:</label>
+            <input formControlName="pricePerMonth" type="number" class="form-control bg-input" id="pricePerMonth"
+                placeholder="Ingrese el precio..." />
+        </div>
+
+        <!-- CATEGORÍA -->
+        <div class="mb-3">
+            <label for="categoryId" class="form-label fw-bolder">Categoría:</label>
+            <select formControlName="categoryId" id="categoryId" class="form-select bg-input">
+                <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+            </select>
+        </div>
+
+        <!-- PROFESOR -->
+        <div class="mb-3">
+            <label for="teacherId" class="form-label fw-bolder">Profesor:</label>
+            <select formControlName="teacherId" id="teacherId" class="form-select bg-input">
+                <option [ngValue]="null">Sin asignar</option>
+                <option *ngFor="let teacher of teachers" [value]="teacher._id">
+                    {{ teacher.firstName }} {{ teacher.lastName }}
+                </option>
+            </select>
+        </div>
+
+        <!-- CAPACIDAD -->
+        <div class="mb-3">
+            <label for="maxCapacity" class="form-label fw-bolder">Capacidad máxima:</label>
+            <input formControlName="maxCapacity" type="number" class="form-control bg-input" id="maxCapacity"
+                placeholder="Ingrese la capacidad máxima..." />
+        </div>
+
+        <!-- IMAGEN -->
+        <div class="mb-3">
+            <label for="imageUrl" class="form-label fw-bolder">URL de imagen:</label>
+            <input formControlName="imageUrl" type="url" class="form-control bg-input" id="imageUrl"
+                placeholder="https://example.com/imagen.jpg" />
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold">Guardar cambios</button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">Cancelar</button>
+        </div>
+    </form>
+</div>
