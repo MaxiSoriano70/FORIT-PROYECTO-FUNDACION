@@ -1,0 +1,12 @@
+<app-toolbar-course (addCourse)="onCourseAdded($event)"></app-toolbar-course>
+
+<div *ngIf="courses$ | async as courses; else loading">
+    <app-table-courses [courses]="courses"
+    (editCourse)="openEditModal($event)"
+    (deleteCourse)="onCourseDeleted($event)">
+    </app-table-courses>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
