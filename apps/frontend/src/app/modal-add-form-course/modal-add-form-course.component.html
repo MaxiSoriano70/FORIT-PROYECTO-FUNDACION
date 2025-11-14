@@ -1,0 +1,100 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Agregar Curso</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+
+        <!-- NOMBRE -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Nombre del curso:</label>
+            <input type="text" formControlName="name" class="form-control bg-input" placeholder="Ingrese nombre..." />
+            <div *ngIf="courseForm.get('name')?.invalid && courseForm.get('name')?.touched" class="text-danger">
+                <small *ngIf="courseForm.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="courseForm.get('name')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+            </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Descripción:</label>
+            <textarea formControlName="description" rows="3" class="form-control bg-input"
+                placeholder="Ingrese descripción..."></textarea>
+            <div *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched"
+                class="text-danger">
+                <small *ngIf="courseForm.get('description')?.errors?.['required']">La descripción es
+                    obligatoria.</small>
+            </div>
+        </div>
+
+        <!-- DURACIÓN -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Duración (meses):</label>
+            <input type="number" formControlName="durationMonths" class="form-control bg-input" min="1" />
+        </div>
+
+        <!-- HORARIO -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Horario:</label>
+            <input type="text" formControlName="schedule" class="form-control bg-input"
+                placeholder="Ej: Lunes y Miércoles de 18:00 a 20:00" />
+        </div>
+
+        <!-- FECHAS -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bolder">Fecha de inicio:</label>
+                <input type="date" formControlName="startDate" class="form-control bg-input" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bolder">Fecha de fin:</label>
+                <input type="date" formControlName="endDate" class="form-control bg-input" />
+            </div>
+        </div>
+
+        <!-- PRECIO -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Precio por mes ($):</label>
+            <input type="number" formControlName="pricePerMonth" class="form-control bg-input" min="0" />
+        </div>
+
+        <!-- CATEGORÍA -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Categoría:</label>
+            <select formControlName="categoryId" class="form-select bg-input">
+                <option value="">Seleccione categoría...</option>
+                <option *ngFor="let c of categorias" [value]="c._id">{{ c.name }}</option>
+            </select>
+        </div>
+
+        <!-- PROFESOR -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Profesor:</label>
+            <select formControlName="teacherId" class="form-select bg-input">
+                <option [value]="null">Sin asignar</option>
+                <option *ngFor="let t of teachers" [value]="t._id">{{ t.firstName }} {{ t.lastName }}</option>
+            </select>
+        </div>
+
+        <!-- CAPACIDAD -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Capacidad máxima:</label>
+            <input type="number" formControlName="maxCapacity" class="form-control bg-input" min="1" max="500" />
+        </div>
+
+        <!-- IMAGEN -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Imagen (URL):</label>
+            <input type="text" formControlName="imageUrl" class="form-control bg-input"
+                placeholder="https://ejemplo.com/imagen.jpg" />
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold">Agregar</button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">Cancelar</button>
+        </div>
+
+    </form>
+</div>
