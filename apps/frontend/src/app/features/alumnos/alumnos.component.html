@@ -1,0 +1,14 @@
+<app-toolbar-student (addStudent)="onStudentAdded($event)"></app-toolbar-student>
+
+<div *ngIf="students$ | async as students; else loading">
+    <app-table-students
+        [students]="students"
+        (editStudent)="openEditModal($event)"
+        (deleteStudent)="onStudentDeleted($event)"
+        (detailStudent)="openDetailPage($event)">
+    </app-table-students>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
