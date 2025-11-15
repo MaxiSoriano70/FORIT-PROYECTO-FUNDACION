@@ -1,0 +1,78 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Editar Estudiante</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+
+        <!-- NOMBRE -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Nombre:</label>
+            <input formControlName="firstName" type="text" class="form-control bg-input"
+                placeholder="Ingrese nombre..." />
+            <div *ngIf="studentForm.get('firstName')?.invalid && studentForm.get('firstName')?.touched"
+                class="text-danger">
+                <small *ngIf="studentForm.get('firstName')?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="studentForm.get('firstName')?.errors?.['minlength']">Debe tener al menos 3
+                    caracteres.</small>
+                <small *ngIf="studentForm.get('firstName')?.errors?.['pattern']">Solo letras y espacios.</small>
+            </div>
+        </div>
+
+        <!-- APELLIDO -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Apellido:</label>
+            <input formControlName="lastName" type="text" class="form-control bg-input"
+                placeholder="Ingrese apellido..." />
+            <div *ngIf="studentForm.get('lastName')?.invalid && studentForm.get('lastName')?.touched"
+                class="text-danger">
+                <small *ngIf="studentForm.get('lastName')?.errors?.['required']">El apellido es obligatorio.</small>
+                <small *ngIf="studentForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 3
+                    caracteres.</small>
+                <small *ngIf="studentForm.get('lastName')?.errors?.['pattern']">Solo letras y espacios.</small>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Email:</label>
+            <input formControlName="email" type="email" class="form-control bg-input"
+                placeholder="ejemplo@correo.com" />
+            <div *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched" class="text-danger">
+                <small *ngIf="studentForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
+                <small *ngIf="studentForm.get('email')?.errors?.['email']">Debe ser un email válido.</small>
+            </div>
+        </div>
+
+        <!-- TELÉFONO -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Teléfono:</label>
+            <input formControlName="phone" type="text" class="form-control bg-input"
+                placeholder="Ingrese teléfono..." />
+            <div *ngIf="studentForm.get('phone')?.invalid && studentForm.get('phone')?.touched" class="text-danger">
+                <small *ngIf="studentForm.get('phone')?.errors?.['required']">El teléfono es obligatorio.</small>
+                <small *ngIf="studentForm.get('phone')?.errors?.['pattern']">Debe contener solo números (8 a 15
+                    dígitos).</small>
+            </div>
+        </div>
+
+        <!-- DIRECCIÓN -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Dirección:</label>
+            <input formControlName="address" type="text" class="form-control bg-input"
+                placeholder="Ingrese dirección..." />
+            <div *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched" class="text-danger">
+                <small *ngIf="studentForm.get('address')?.errors?.['required']">La dirección es obligatoria.</small>
+                <small *ngIf="studentForm.get('address')?.errors?.['minlength']">Debe tener al menos 5
+                    caracteres.</small>
+            </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold">Guardar cambios</button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">Cancelar</button>
+        </div>
+    </form>
+</div>
