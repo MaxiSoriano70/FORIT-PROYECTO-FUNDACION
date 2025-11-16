@@ -76,3 +76,34 @@ h3 {
         transform: scale(1);
     }
 }
+
+.information-btn{
+    text-transform: capitalize;
+    font-size: 1rem;
+    font-weight: bolder;
+    background-color: var(--color-complementario-I);
+    color: var(--color-blanco);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.information-btn:hover{
+    background-color: var(--color-complementario-II);
+    transition: 0.2s linear;
+}
+
+@media (max-width:440px) {
+    .information-btn{
+        padding: 7.5px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+    }
+}
+
+@media (max-width:360px) {
+    .information-btn{
+        padding: 5px 7.5px;
+    }
+}
