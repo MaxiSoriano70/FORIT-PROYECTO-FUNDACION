@@ -10,16 +10,6 @@ class UserManager extends Manager<IUser> {
         super(User);
     }
 
-    override save = async (data: Partial<IUser>): Promise<Lean<IUser>> => {
-        if (data.password) {
-            const salt = await bcrypt.genSalt(10);
-            data.password = await bcrypt.hash(data.password, salt);
-        }
-        const newUser = new this.model(data);
-        await newUser.save();
-        return newUser.toObject() as Lean<IUser>;
-    };
-
     findByFirstName = async (firstName: string): Promise<Lean<IUser> | null> => {
         return (await this.model.findOne({ firstName }).lean()) as Lean<IUser> | null;
     };
@@ -44,6 +34,10 @@ class UserManager extends Manager<IUser> {
         return (await this.model
             .findByIdAndUpdate(userId, { role: newRole }, { new: true })
             .lean()) as Lean<IUser> | null;
+    };
+
+    findByRole = async (role: UserRole): Promise<Lean<IUser>[]> => {
+        return (await this.model.find({ role }).lean()) as Lean<IUser>[];
     };
 }
 

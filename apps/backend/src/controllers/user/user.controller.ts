@@ -146,3 +146,30 @@ export const changeUserRole = async (
         next(err);
     }
 };
+
+export const getUsersByRole = async (req: Request<{ role: string }>, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { role } = req.params;
+
+        if (!Object.values(UserRole).includes(role as UserRole)) {
+            return next({ message: "Rol inválido", status: 400 });
+        }
+
+        const users = await userManager.findByRole(role as UserRole);
+
+        if (!users || users.length === 0) {
+            return next({ message: "No se encontraron usuarios con ese rol", status: 404 });
+        }
+
+        res.status(200).json({
+            message: `Usuarios con rol ${role}`,
+            data: users,
+            method: req.method,
+            url: req.url,
+        });
+    } catch (error: unknown) {
+        const err = error as CustomError;
+        next({ message: err.message || String(error), status: 500 });
+    }
+};
+

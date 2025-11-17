@@ -1,5 +1,5 @@
 export const InformationStatus = {
-    USUARIOAINFORMAR: "USUARIOAIFORMAR",
+    USUARIOAINFORMAR: "USUARIOAINFORMAR",
     INFORMAR: "INFORMAR",
     INFORMADO: "INFORMADO",
 } as const;

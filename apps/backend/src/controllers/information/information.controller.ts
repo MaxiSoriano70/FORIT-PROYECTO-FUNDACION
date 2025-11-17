@@ -2,9 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { informationManager } from "../../data/mongo/managers/information/information.manager.js";
 import { CustomError } from "../../middlewares/errorHandler.mid.js";
 
-/**
- * Obtener todas las solicitudes de información
- */
 export const getAllInformation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const informations = await informationManager.findAll();
@@ -20,9 +17,6 @@ export const getAllInformation = async (req: Request, res: Response, next: NextF
     }
 };
 
-/**
- * Obtener una solicitud por ID
- */
 export const getInformationById = async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
     try {
         const info = await informationManager.findById(req.params.id);
@@ -40,11 +34,6 @@ export const getInformationById = async (req: Request<{ id: string }>, res: Resp
     }
 };
 
-/**
- * Crear una nueva solicitud de información
- * - Si ya existe una solicitud previa, la actualiza.
- * - Si no, crea una nueva.
- */
 export const createInformation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const info = await informationManager.create(req.body);
@@ -60,9 +49,6 @@ export const createInformation = async (req: Request, res: Response, next: NextF
     }
 };
 
-/**
- * Actualizar una solicitud existente
- */
 export const updateInformation = async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
     try {
         const info = await informationManager.editOne(req.params.id, req.body);
@@ -80,9 +66,6 @@ export const updateInformation = async (req: Request<{ id: string }>, res: Respo
     }
 };
 
-/**
- * Eliminar una solicitud por ID
- */
 export const deleteInformation = async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
     try {
         const deleted = await informationManager.deleteById(req.params.id);
@@ -99,9 +82,6 @@ export const deleteInformation = async (req: Request<{ id: string }>, res: Respo
     }
 };
 
-/**
- * Convertir una solicitud de información en usuario registrado
- */
 export const convertInformationToUser = async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
     try {
         const result = await informationManager.convertToUser(req.params.id);

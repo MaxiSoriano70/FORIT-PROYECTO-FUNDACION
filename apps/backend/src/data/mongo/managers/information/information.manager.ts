@@ -28,23 +28,21 @@ class InformationManager extends Manager<IInformation> {
             courseId: courseObjectId,
         });
 
-        let status: string;
-
         if (existingInfo) {
-            status =
-                existingInfo.status === InformationStatus.INFORMAR
-                    ? InformationStatus.INFORMADO
-                    : InformationStatus.INFORMAR;
+            const status = existingUser
+                ? InformationStatus.USUARIOAINFORMAR
+                : InformationStatus.INFORMAR;
 
             const updatedInfo = await this.editOne(existingInfo._id.toString(), {
-                status,
+                ...data,
                 updatedAt: new Date(),
+                status,
             });
 
             return updatedInfo!;
         }
 
-        status = existingUser
+        const status = existingUser
             ? InformationStatus.USUARIOAINFORMAR
             : InformationStatus.INFORMAR;
 
@@ -56,6 +54,7 @@ class InformationManager extends Manager<IInformation> {
 
         return newInfo;
     }
+
 
     async convertToUser(informationId: string) {
         const info = await this.findById(informationId);
@@ -73,7 +72,6 @@ class InformationManager extends Manager<IInformation> {
 
         const lastName = info.lastName?.trim() || "User";
 
-        // Normalizar apellido (elimina tildes y caracteres especiales)
         const normalizedLastName = lastName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
         const formattedLastName =

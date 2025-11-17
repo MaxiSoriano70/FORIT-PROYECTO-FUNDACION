@@ -10,6 +10,7 @@ import {
     updateUser,
     deleteUser,
     changeUserRole,
+    getUsersByRole,
 } from "../../controllers/user/user.controller.js";
 
 const routerUser = Router();
@@ -20,6 +21,7 @@ routerUser.get("/firstName/:firstName", getUserByFirstName);
 routerUser.get("/lastName/:lastName", getUserByLastName);
 routerUser.get("/email/:email", getUserByEmail);
 routerUser.get("/fullName/:firstName/:lastName", getUserByFullName);
+routerUser.get("/role/:role", getUsersByRole);
 
 routerUser.post("/", createUser);
 routerUser.put("/:id", updateUser);
