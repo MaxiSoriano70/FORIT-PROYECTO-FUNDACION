@@ -9,6 +9,8 @@ import { ToolbarStudentComponent } from '../../toolbar-student/toolbar-student.c
 import { LoadingComponent } from "../../loading/loading.component";
 import { ModalEditFormStudentComponent } from '../../modal-edit-form-student/modal-edit-form-student.component';
 import { Router } from '@angular/router';
+import { EdteamComponent } from "../../edteam/edteam.component";
+import { FooterComponent } from "../../footer/footer.component";
 
 declare const swal: any;
 
@@ -19,8 +21,10 @@ declare const swal: any;
     CommonModule,
     ToolbarStudentComponent,
     TableStudentsComponent,
-    LoadingComponent
-  ],
+    LoadingComponent,
+    EdteamComponent,
+    FooterComponent
+],
   templateUrl: './alumnos.component.html',
   styleUrl: './alumnos.component.css'
 })

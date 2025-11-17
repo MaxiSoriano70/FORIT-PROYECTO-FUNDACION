@@ -8,17 +8,21 @@ import { Observable, of, switchMap } from 'rxjs';
 import { Category } from '../../../shared/entities/category';
 import { CategoriasApiService } from './categorias-api-service.service';
 import { ModalEditFormCategoryComponent } from '../../modal-edit-form-category/modal-edit-form-category.component';
+import { EdteamComponent } from "../../edteam/edteam.component";
+import { FooterComponent } from "../../footer/footer.component";
 declare const swal: any;
 
 @Component({
   selector: 'app-categorias',
-  standalone: true, // ⚠️ asegúrate de tener esto si usás componentes standalone
+  standalone: true,
   imports: [
-    CommonModule,               // ✅ Agregalo aquí
+    CommonModule,
     ToolbarCategoryComponent,
     LoadingComponent,
-    TableCategoriesComponent
-  ],
+    TableCategoriesComponent,
+    EdteamComponent,
+    FooterComponent
+],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']
 })

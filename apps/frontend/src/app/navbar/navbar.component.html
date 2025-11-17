@@ -6,6 +6,7 @@
                 <p>Fundación RRHH</p>
             </a>
         </article>
+
         <nav class="menu" [class.open]="isMenuVisible">
             <article class="head">
                 <div class="logo">
@@ -18,68 +19,95 @@
                     <i class="fa-regular fa-circle-xmark"></i>
                 </button>
             </article>
+
             <ul>
                 <li>
-                    <a [routerLink]="[routePaths.HOME]" aria-label="Home"><i class="fa-solid fa-house"></i> Home</a>
+                    <a [routerLink]="[routePaths.HOME]" aria-label="Home">
+                        <i class="fa-solid fa-house"></i> Home
+                    </a>
                 </li>
-                <li class="dropdown" *ngIf="(usuario$ | async)?.role === 'ADMIN'">
-                    <a href="#" aria-label="Administrar"><i class="fa-solid fa-user-tie"></i> Administrar</a>
+
+                <li>
+                    <a [routerLink]="[routePaths.NOSOTROS]" aria-label="Nosotros">
+                        <i class="fa-solid fa-circle-info"></i> Nosotros
+                    </a>
+                </li>
+
+                <!-- CONTACTO (submenu) -->
+                <li class="dropdown">
+                    <a href="#" aria-label="Contacto" (click)="$event.preventDefault()">
+                        <i class="fa-solid fa-envelope"></i> Contacto
+                    </a>
                     <i class="fa-solid fa-caret-down"></i>
                     <ul class="submenu">
-                        <li><a [routerLink]="[routePaths.CATEGORIAS]" aria-label="Categorias"><span><i class="fa-solid fa-list"></i> Categorias</span></a></li>
+                        <li>
+                            <a href="#" aria-label="Whatsapp">
+                                <span><i class="fa-brands fa-whatsapp"></i> Whatsapp</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" aria-label="Instagram">
+                                <span><i class="fa-brands fa-instagram"></i> Instagram</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" aria-label="Facebook">
+                                <span><i class="fa-brands fa-facebook"></i> Facebook</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ADMINISTRAR (submenu) -->
+                <li class="dropdown" *ngIf="(usuario$ | async)?.role === 'ADMIN'">
+                    <a href="#" aria-label="Administrar" (click)="$event.preventDefault()">
+                        <i class="fa-solid fa-user-tie"></i> Administrar
+                    </a>
+                    <i class="fa-solid fa-caret-down"></i>
+                    <ul class="submenu">
+                        <li><a [routerLink]="[routePaths.CATEGORIAS]" aria-label="Categorias"><span><i
+                                        class="fa-solid fa-list"></i> Categorias</span></a></li>
                         <li><a [routerLink]="[routePaths.USUARIOS]" aria-label="Usuarios"><span><i
                                         class="fa-solid fa-users"></i> Usuarios</span></a></li>
                         <li><a [routerLink]="[routePaths.ESTUDIANTES]" aria-label="Estudiantes"><span><i
                                         class="fa-solid fa-user-graduate"></i> Estudiantes</span></a></li>
                         <li><a [routerLink]="[routePaths.CURSOS]" aria-label="Cursos"><span><i
                                         class="fa-solid fa-graduation-cap"></i> Cursos</span></a></li>
-                        <li><a [routerLink]="[routePaths.INFORMACION]" aria-label="Cursos"><span><i
-                                        class="fa-solid fa-graduation-cap"></i> Información</span></a></li>
+                        <li><a [routerLink]="[routePaths.INFORMACION]" aria-label="Información"><span><i
+                                        class="fa-solid fa-circle-info"></i> Información</span></a></li>
                         <li><a [routerLink]="[routePaths.INSCRIPCIONES]" aria-label="Inscripciones"><span><i
                                         class="fa-solid fa-clipboard-list"></i> Inscripciones</span></a></li>
                     </ul>
                 </li>
-                <li>
-                    <a [routerLink]="[routePaths.NOSOTROS]" aria-label="tips"><i class="fa-solid fa-circle-info"></i>
-                        Nosotros</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" aria-label="Contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
-                    <i class="fa-solid fa-caret-down"></i>
-                    <ul class="submenu">
-                        <li><a href="#" aria-label="Whatsapp"><span><i class="fa-brands fa-whatsapp"></i>
-                                    Whatsapp</span></a></li>
-                        <li><a href="#" aria-label="Instragram"><span><i class="fa-brands fa-instagram"></i>
-                                    Instragram</span></a></li>
-                        <li><a href="#" aria-label="Facebook"><span><i class="fa-brands fa-facebook"></i>
-                                    Facebook</span></a></li>
-                    </ul>
-                </li>
+
+                <!-- USUARIO (submenu) -->
                 <li class="dropdown" *ngIf="usuario$ | async as usuario">
-                    <a href="#" aria-label="Nombre usuario"><i class="fa-solid fa-user"></i> <span id="nombre-usuario">
-                            {{usuario.firstName | fullname: usuario.lastName}}</span></a>
+                    <a href="#" aria-label="Nombre usuario" (click)="$event.preventDefault()">
+                        <i class="fa-solid fa-user"></i>
+                        <span id="nombre-usuario">
+                            {{ usuario.firstName | fullname: usuario.lastName }}
+                        </span>
+                    </a>
                     <i class="fa-solid fa-caret-down"></i>
                     <ul class="submenu">
-                        <!-- Button modal Editar Perfil-->
                         <li>
                             <a href="#" aria-label="Datos Personales" (click)="abrirModalPerfil(usuario)">
                                 <span><i class="fa-solid fa-user-pen"></i> Datos Personales</span>
                             </a>
                         </li>
-                        <li><a href="#" aria-label="Mis mascotas"><span><i class="fa-solid fa-paw"></i> Mis
-                                    cursos</span></a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
+
         <article class="header-rigth">
-            <!-- Button modal Iniciar Sesión-->
             <button type="button" class="login-btn" *ngIf="!(usuario$ | async)" (click)="abrirModal()">
                 <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
             </button>
             <button type="button" class="login-btn" *ngIf="usuario$ | async" (click)="cerrarSesion()">
                 <i class="fa-solid fa-door-open"></i> Cerrar Sesión
             </button>
+
             <button type="button" class="open-menu-btn" aria-label="Menu" (click)="abrirMenu()">
                 <i class="fa-solid fa-bars"></i>
             </button>

@@ -8,11 +8,13 @@ import { Observable, of, switchMap } from 'rxjs';
 import { LoadingComponent } from "../../loading/loading.component";
 import { Course } from '../../../shared/entities/course';
 import { TableCoursesComponent } from "../../table-courses/table-courses.component";
+import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
+import { FooterComponent } from "../../footer/footer.component";
 declare const swal: any;
 
 @Component({
   selector: 'app-cursos',
-  imports: [CommonModule, ToolbarCourseComponent, LoadingComponent, TableCoursesComponent],
+  imports: [CommonModule, ToolbarCourseComponent, LoadingComponent, TableCoursesComponent, RollingCodeComponent, FooterComponent],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })

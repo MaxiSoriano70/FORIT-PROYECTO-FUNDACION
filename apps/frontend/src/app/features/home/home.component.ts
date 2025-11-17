@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { BannerComponent } from "../../banner/banner.component";
 import { LoadingComponent } from "../../loading/loading.component";
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Course } from '../../../shared/entities/course';
 import { HomeApiService } from './home-api.service';
 import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
@@ -38,38 +38,37 @@ export class HomeComponent {
   }
 
   abrirModal(courseId: string) {
-    const modalRef = this.modalService.open(ModalAddFormInformationComponent, { size: 'lg' });
-    modalRef.componentInstance.courseId = courseId;
+    this.usuario$.pipe(take(1)).subscribe(usuario => {
 
-    modalRef.closed.subscribe((data) => {
-      if (data) {
-        this.homeApiService.createInformation(data).subscribe({
-          next: () => {
-            swal({
-              title: "¡Solicitud enviada!",
-              text: "Tu información fue enviada correctamente. Pronto nos contactaremos contigo.",
-              icon: "success",
-              button: "Aceptar"
-            });
-          },
-          error: () => {
-            swal({
-              title: "Error",
-              text: "Hubo un problema al enviar la información. Intenta nuevamente.",
-              icon: "error",
-              button: "Aceptar"
-            });
-          }
-        });
+      const modalRef = this.modalService.open(ModalAddFormInformationComponent);
 
-      } else {
-        swal({
-          title: "Acción cancelada",
-          text: "No se envió ninguna información.",
-          icon: "info",
-          button: "Cerrar"
-        });
-      }
+      modalRef.componentInstance.courseId = courseId;
+      modalRef.componentInstance.usuario = usuario;
+
+      modalRef.closed.subscribe((data) => {
+        if (data) {
+          this.homeApiService.createInformation(data).subscribe({
+            next: () => {
+              swal({
+                title: "¡Solicitud enviada!",
+                text: "Tu información fue enviada correctamente. Pronto nos contactaremos contigo.",
+                icon: "success",
+                button: "Aceptar"
+              });
+            },
+            error: () => {
+              swal({
+                title: "Error",
+                text: "Hubo un problema al enviar la información. Intenta nuevamente.",
+                icon: "error",
+                button: "Aceptar"
+              });
+            }
+          });
+        }
+      });
+
     });
   }
+
 }

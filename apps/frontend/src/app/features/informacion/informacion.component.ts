@@ -7,12 +7,13 @@ import { IInformation } from '../../../shared/entities/information';
 import { TableInformationComponent } from "../../table-information/table-information.component";
 import { LoadingComponent } from "../../loading/loading.component";
 import { ModalEditFormInformationComponent } from "../../modal-edit-form-information/modal-edit-form-information.component";
-
+import { EdteamComponent } from "../../edteam/edteam.component";
+import { FooterComponent } from "../../footer/footer.component";
 declare const swal: any;
 
 @Component({
   selector: 'app-informacion',
-  imports: [CommonModule, TableInformationComponent, LoadingComponent],
+  imports: [CommonModule, TableInformationComponent, LoadingComponent, EdteamComponent, FooterComponent],
   templateUrl: './informacion.component.html',
   styleUrl: './informacion.component.css'
 })

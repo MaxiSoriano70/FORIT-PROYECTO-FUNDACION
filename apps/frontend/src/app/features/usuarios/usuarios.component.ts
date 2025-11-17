@@ -9,6 +9,8 @@ import { TableUsersComponent } from "../../table-users/table-users.component";
 import { LoadingComponent } from "../../loading/loading.component";
 import { ModalEditFormUserComponent } from '../../modal-edit-form-user/modal-edit-form-user.component';
 import { Router } from '@angular/router';
+import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
+import { FooterComponent } from "../../footer/footer.component";
 declare const swal: any;
 
 @Component({
@@ -18,8 +20,10 @@ declare const swal: any;
     CommonModule,
     ToolbarUserComponent,
     TableUsersComponent,
-    LoadingComponent
-  ],
+    LoadingComponent,
+    RollingCodeComponent,
+    FooterComponent
+],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })

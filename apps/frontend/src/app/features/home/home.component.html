@@ -38,10 +38,10 @@
                         {{ course.description }}
                     </p>
 
-                    <button type="button" class="information-btn" *ngIf="!(usuario$ | async) && course._id"
-                        (click)="abrirModal(course._id!)">
+                    <button type="button" class="information-btn" *ngIf="course._id" (click)="abrirModal(course._id!)">
                         <i class="fa-solid fa-circle-info"></i> Información
                     </button>
+
                 </div>
             </div>
         </article>

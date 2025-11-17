@@ -49,8 +49,8 @@ export class ModalEditFormCategoryComponent implements OnInit {
   onSubmit(): void {
     if (this.categoryForm.valid) {
       const updatedCategory: Category = {
-        ...this.category, // tomamos los datos originales
-        ...this.categoryForm.value // y los actualizados
+        ...this.category,
+        ...this.categoryForm.value
       };
       this.activeModal.close(updatedCategory);
     } else {
