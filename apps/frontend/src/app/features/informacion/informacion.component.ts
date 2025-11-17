@@ -30,12 +30,10 @@ export class InformacionComponent implements OnInit {
     this.loadInformation();
   }
 
-  /* ------------------ Cargar Información ------------------ */
   loadInformation() {
     this.information$ = this.infoService.getAll();
   }
 
-  /* ------------------ EDITAR ------------------ */
   openEditModal(info: IInformation): void {
     const modalRef = this.modalService.open(ModalEditFormInformationComponent, { size: 'lg' });
     modalRef.componentInstance.info = info;
@@ -55,7 +53,6 @@ export class InformacionComponent implements OnInit {
     }).catch(() => {});
   }
 
-  /* ------------------ ELIMINAR ------------------ */
   onInformationDeleted(info: IInformation): void {
     swal({
       title: '¿Seguro?',
@@ -78,7 +75,6 @@ export class InformacionComponent implements OnInit {
     });
   }
 
-  /* ------------------ CONVERTIR A USUARIO ------------------ */
   onConvert(info: IInformation) {
     this.infoService.convertToUser(info._id!).pipe(
       switchMap(() => {

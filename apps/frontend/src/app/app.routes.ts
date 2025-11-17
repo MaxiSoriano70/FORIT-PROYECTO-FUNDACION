@@ -34,6 +34,12 @@ export const routes: Routes = [
         import('./features/cursos/cursos.component').then(m => m.CursosComponent)
     },
     {
+        path: RoutePaths.CURSOSDETALLE,
+        canActivate: [ruteoGuard(['ADMIN'])],
+        loadComponent: () =>
+        import('./features/cursos/view-curso/view-curso.component').then(m => m.ViewCursoComponent)
+    },
+    {
         path: RoutePaths.ESTUDIANTES,
         canActivate: [ruteoGuard(['ADMIN'])],
         loadComponent: () =>

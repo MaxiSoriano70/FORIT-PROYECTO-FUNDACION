@@ -1,0 +1,27 @@
+<section class="sCurso">
+    <article class="aVolver">
+        <button (click)="goBack()" type="button" class="btn btn-success">
+            <i class="fa-solid fa-caret-left"></i> Volver
+        </button>
+    </article>
+
+    <div class="card mt-4 mb-4" style="width: 80%;">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">{{ course?.name }}</h5>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text"><strong>Descripción:</strong> {{ course?.description }}</p>
+            <p class="card-text"><strong>Duración:</strong> {{ course?.durationMonths }} meses</p>
+            <p class="card-text"><strong>Horario:</strong> {{ course?.schedule }}</p>
+            <p class="card-text"><strong>Precio por mes:</strong> ${{ course?.pricePerMonth | number:'1.2-2' }}</p>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Fecha de inicio:</strong> {{ course?.startDate | date:'dd/MM/yyyy' }}</li>
+            <li class="list-group-item"><strong>Fecha de fin:</strong> {{ course?.endDate | date:'dd/MM/yyyy' }}</li>
+            <li class="list-group-item"><strong>Capacidad:</strong> {{ course?.enrolledCount }} / {{ course?.maxCapacity }}</li>
+            <li class="list-group-item"><strong>ID del Curso:</strong> {{ course?._id }}</li>
+        </ul>
+    </div>
+</section>

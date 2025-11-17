@@ -10,6 +10,7 @@ import { Course } from '../../../shared/entities/course';
 import { TableCoursesComponent } from "../../table-courses/table-courses.component";
 import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { Router } from '@angular/router';
 declare const swal: any;
 
 @Component({
@@ -22,7 +23,7 @@ declare const swal: any;
 export class CursosComponent implements OnInit {
   courses$!: Observable<Course[]>;
 
-  constructor(private cursosApi: CursosAPIService, private modalService: NgbModal) { }
+  constructor(private cursosApi: CursosAPIService, private modalService: NgbModal, private router: Router) { }
   ngOnInit(): void {
     this.courses$ = this.cursosApi.getCursos();
   }
@@ -88,5 +89,9 @@ export class CursosComponent implements OnInit {
         });
       }
     });
+  }
+
+  openDetailPage(course: Course) {
+    this.router.navigate(['/cursosdetalle'], { state: { course } });
   }
 }

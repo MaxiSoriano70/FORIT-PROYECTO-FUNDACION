@@ -4,6 +4,7 @@ export enum RoutePaths{
     USUARIOS = "usuarios",
     USUARIODETALLE = "usuariodetalle",
     CURSOS = "cursos",
+    CURSOSDETALLE = "cursosdetalle",
     ESTUDIANTES = "estudiantes",
     ESTUDIANTEDETALLE = "estudiantedetalle",
     INFORMACION = "informacion",
