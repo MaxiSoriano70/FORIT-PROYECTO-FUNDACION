@@ -6,6 +6,8 @@ import { NavbarComponent } from '../../app/navbar/navbar.component';
 import { FullnamePipe } from '../../shared/pipes/fullname.pipe';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { ModalIniciarSesionComponent } from '../../app/modal-iniciar-sesion/modal-iniciar-sesion.component';
+import { ModalEditFormPerfilComponent } from '../../app/modal-edit-form-perfil/modal-edit-form-perfil.component';
 
 export default {
     title: 'Componentes/Navbar',
@@ -17,6 +19,8 @@ export default {
                 RouterTestingModule,
                 NgbModule,
                 FullnamePipe,
+                ModalIniciarSesionComponent,
+                ModalEditFormPerfilComponent,
             ],
             providers: [provideMockStore({ initialState: { sesion: { usuarioLogueado: null } } })],
         }),
