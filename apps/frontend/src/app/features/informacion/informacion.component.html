@@ -1,0 +1,12 @@
+<div *ngIf="information$ | async as information; else loading">
+    <app-table-information 
+        [informations]="information"
+        (editInformation)="openEditModal($event)"
+        (deleteInformation)="onInformationDeleted($event)"
+        (convertToUser)="onConvert($event)"
+    ></app-table-information>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
