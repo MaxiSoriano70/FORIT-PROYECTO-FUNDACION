@@ -8,11 +8,11 @@ import { HomeApiService } from './home-api.service';
 import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
 import { FooterComponent } from "../../footer/footer.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalAddFormInformationComponent } from '../../modal-add-form-information/modal-add-form-information.component';
-
 import { Store } from '@ngrx/store';
 import { User } from '../../../shared/entities/user';
 import { Sesion } from '../../ngrx/auth/auth.model';
+import { ModalAddFormInformationComponent } from '../../modal-add-form-information/modal-add-form-information.component';
+declare const swal: any;
 
 @Component({
   selector: 'app-home',
@@ -43,7 +43,32 @@ export class HomeComponent {
 
     modalRef.closed.subscribe((data) => {
       if (data) {
-        console.log("Información enviada:", data);
+        this.homeApiService.createInformation(data).subscribe({
+          next: () => {
+            swal({
+              title: "¡Solicitud enviada!",
+              text: "Tu información fue enviada correctamente. Pronto nos contactaremos contigo.",
+              icon: "success",
+              button: "Aceptar"
+            });
+          },
+          error: () => {
+            swal({
+              title: "Error",
+              text: "Hubo un problema al enviar la información. Intenta nuevamente.",
+              icon: "error",
+              button: "Aceptar"
+            });
+          }
+        });
+
+      } else {
+        swal({
+          title: "Acción cancelada",
+          text: "No se envió ninguna información.",
+          icon: "info",
+          button: "Cerrar"
+        });
       }
     });
   }

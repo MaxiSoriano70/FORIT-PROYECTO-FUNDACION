@@ -65,6 +65,16 @@ h3 {
     font-weight: bold;
 }
 
+.aCursos .card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.information-btn {
+    margin-top: auto;
+}
+
 @keyframes show {
     from {
         opacity: 0;
@@ -84,7 +94,7 @@ h3 {
     background-color: var(--color-complementario-I);
     color: var(--color-blanco);
     border: none;
-    padding: 10px 15px;
+    padding: 7.5px 10px;
     border-radius: 10px;
     cursor: pointer;
 }
