@@ -1,0 +1,68 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Solicitar Información</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="infoForm" (ngSubmit)="onSubmit()">
+
+        <!-- NOMBRE -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Nombre:</label>
+            <input formControlName="firstName" type="text" class="form-control bg-input" placeholder="Ingrese nombre...">
+            <div *ngIf="infoForm.get('firstName')?.touched && infoForm.get('firstName')?.invalid" class="text-danger">
+                <small *ngIf="infoForm.get('firstName')?.errors?.['required']">El nombre es obligatorio.</small>
+                <small *ngIf="infoForm.get('firstName')?.errors?.['minlength']">Mínimo 2 caracteres.</small>
+                <small *ngIf="infoForm.get('firstName')?.errors?.['pattern']">
+                    Solo letras, espacios y acentos.
+                </small>
+            </div>
+        </div>
+
+        <!-- APELLIDO -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Apellido:</label>
+            <input formControlName="lastName" type="text" class="form-control bg-input" placeholder="Ingrese apellido...">
+            <div *ngIf="infoForm.get('lastName')?.touched && infoForm.get('lastName')?.invalid" class="text-danger">
+                <small *ngIf="infoForm.get('lastName')?.errors?.['required']">El apellido es obligatorio.</small>
+                <small *ngIf="infoForm.get('lastName')?.errors?.['minlength']">Mínimo 2 caracteres.</small>
+                <small *ngIf="infoForm.get('lastName')?.errors?.['pattern']">
+                    Solo letras, espacios y acentos.
+                </small>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Email:</label>
+            <input formControlName="email" type="email" class="form-control bg-input" placeholder="ejemplo@correo.com">
+            <div *ngIf="infoForm.get('email')?.touched && infoForm.get('email')?.invalid" class="text-danger">
+                <small *ngIf="infoForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
+                <small *ngIf="infoForm.get('email')?.errors?.['email']">Debe ser válido.</small>
+            </div>
+        </div>
+
+        <!-- TELÉFONO -->
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Teléfono:</label>
+            <input formControlName="phone" type="text" class="form-control bg-input" placeholder="Ingrese teléfono...">
+            <div *ngIf="infoForm.get('phone')?.touched && infoForm.get('phone')?.invalid" class="text-danger">
+                <small *ngIf="infoForm.get('phone')?.errors?.['required']">El teléfono es obligatorio.</small>
+                <small *ngIf="infoForm.get('phone')?.errors?.['pattern']">
+                    Solo números (8 a 15 dígitos). Puede incluir "+" al inicio.
+                </small>
+            </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold">
+                Enviar
+            </button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">
+                Cancelar
+            </button>
+        </div>
+
+    </form>
+</div>
