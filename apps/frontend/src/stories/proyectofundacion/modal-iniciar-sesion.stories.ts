@@ -16,27 +16,34 @@ export default {
             imports: [CommonModule, ReactiveFormsModule, NgbModule],
             providers: [
                 provideMockStore({ initialState: { sesion: { usuarioLogueado: null } } }),
+                // Servicio mockeado para Visual TDD
                 {
                     provide: LoginApiService,
                     useValue: {
-                        login: (email: string, password: string) => of({
-                            message: 'Inicio de sesión simulado',
-                            data: {
-                                _id: '1',
-                                firstName: 'Maxi',
-                                lastName: 'Soriano',
-                                email,
-                                role: 'ADMIN',
-                                profileImage: '',
-                            },
-                        }),
+                        login: (email: string, password: string) =>
+                            of({
+                                message: 'Inicio de sesión simulado',
+                                data: {
+                                    _id: '1',
+                                    firstName: 'Maxi',
+                                    lastName: 'Soriano',
+                                    email,
+                                    role: 'ADMIN',
+                                    profileImage: '',
+                                },
+                            }),
                     },
                 },
+                // Mock de modal
                 {
                     provide: NgbActiveModal,
                     useValue: {
-                        close: (payload?: any) => { (globalThis as any).__storybook_modal_closed = payload ?? true; },
-                        dismiss: (reason?: any) => { (globalThis as any).__storybook_modal_dismissed = reason ?? true; },
+                        close: (payload?: any) => {
+                            (globalThis as any).__storybook_modal_closed = payload ?? true;
+                        },
+                        dismiss: (reason?: any) => {
+                            (globalThis as any).__storybook_modal_dismissed = reason ?? true;
+                        },
                     },
                 },
             ],
@@ -44,29 +51,28 @@ export default {
     ],
 } as Meta<ModalIniciarSesionComponent>;
 
-const Template: StoryFn<ModalIniciarSesionComponent> = (args) => ({ props: { ...args } });
+const Template: StoryFn<ModalIniciarSesionComponent> = (args) => ({
+    props: { ...args },
+});
 
 export const Default = Template.bind({});
 Default.args = {};
 
-// Story interactiva simulando login
+// Story simulando login exitoso
 export const LoginSuccess = Template.bind({});
 LoginSuccess.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Rellenar email y contraseña
     const emailInput = await canvas.getByPlaceholderText(/Ingrese su email/i);
     const passwordInput = await canvas.getByPlaceholderText(/Ingrese su contraseña/i);
-    await userEvent.type(emailInput, 'maxi@example.com');
-    await userEvent.type(passwordInput, 'Abc123A');
+    await userEvent.type(emailInput, 'adm@gmail.com');
+    await userEvent.type(passwordInput, 'Admin123!');
 
-    // Hacer submit
-    const submitBtn = await canvas.getByRole('button', { name: /Ingresar|ingresar/i });
+    const submitBtn = await canvas.getByRole('button', { name: /Ingresar/i });
     await userEvent.click(submitBtn);
 
-    // Esperar un poco a que el observable simulado emita y el modal "se cierre"
+    // Esperamos que el observable del mock emita
     await new Promise((r) => setTimeout(r, 100));
 
-    // Mostrar en consola que el modal se cerró (para verificar)
     console.log('Modal cerrado mock:', (globalThis as any).__storybook_modal_closed);
 };
