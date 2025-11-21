@@ -66,7 +66,11 @@ export const registrationController = {
 
     create: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const registration = await registrationManager.save(req.body);
+            const registration = await registrationManager.createRegistration({
+                studentId: req.body.studentId,
+                courseId: req.body.courseId,
+            });
+
             res.status(201).json({
                 message: "Inscripción creada correctamente",
                 data: registration,
@@ -75,7 +79,10 @@ export const registrationController = {
             });
         } catch (error: unknown) {
             const err = error as CustomError;
-            const status = err.message.includes("ya existe") ? 400 : 500;
+            const status = err.message.includes("ya está inscripto") ? 400 :
+                err.message.includes("no existe") ? 404 :
+                    err.message.includes("completo") ? 400 : 500;
+
             next({ message: err.message || String(error), status });
         }
     },

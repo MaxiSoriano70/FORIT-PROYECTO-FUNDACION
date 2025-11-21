@@ -1,13 +1,61 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import Manager from "../manager.mongo.js";
 import Registration, { IRegistration } from "../../models/registration.model.js";
 import { RegistrationStatus } from "../../../../utils/enums/registrationStatus.js";
+import { userManager } from "../user/user.manager.js";
+import { courseManager } from "../course/course.manager.js";
 
 type Lean<T> = Omit<T, keyof Document>;
 
 class RegistrationManager extends Manager<IRegistration> {
     constructor() {
         super(Registration);
+    }
+
+    async createRegistration(data: {
+        studentId: string;
+        courseId: string;
+    }): Promise<Lean<IRegistration>> {
+        const studentId = new Types.ObjectId(data.studentId);
+        const courseId = new Types.ObjectId(data.courseId);
+
+        const student = await userManager.findById(studentId);
+        if (!student) throw new Error("El estudiante no existe.");
+
+
+        const course = await courseManager.findById(courseId);
+        if (!course) throw new Error("El curso no existe.");
+
+        const alreadyRegistered = await this.isStudentRegistered(courseId.toString(), studentId.toString());
+        if (alreadyRegistered) {
+            throw new Error("El estudiante ya está inscripto en este curso.");
+        }
+
+        if (course.enrolledCount >= course.maxCapacity) {
+            throw new Error("El curso ya está completo.");
+        }
+
+        const totalQuotas = course.durationMonths;
+        const pricePerQuota = course.pricePerMonth;
+        const totalAmount = totalQuotas * pricePerQuota;
+
+        const newRegistration = await this.save({
+            studentId,
+            courseId,
+            enrollmentDate: new Date(),
+            status: RegistrationStatus.ACTIVO,
+            courseFinished: false,
+            totalQuotas,
+            paidQuotas: 0,
+            pricePerQuota,
+            totalAmount,
+        } as Partial<IRegistration>);
+
+        await courseManager.editOne(courseId.toString(), {
+            enrolledCount: (course.enrolledCount || 0) + 1,
+        });
+
+        return newRegistration;
     }
 
     findByStudentId = async (studentId: string): Promise<Lean<IRegistration>[]> => {
