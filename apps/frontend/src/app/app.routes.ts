@@ -57,13 +57,12 @@ export const routes: Routes = [
         loadComponent: () =>
         import('./features/informacion/informacion.component').then(m => m.InformacionComponent)
     },
-    /*
     {
         path: RoutePaths.INSCRIPCIONES,
         canActivate: [ruteoGuard(['ADMIN'])],
         loadComponent: () =>
         import('./features/inscripciones/inscripciones.component').then(m => m.InscripcionesComponent)
-    },*/
+    },
     {
     path: RoutePaths.ERROR404,
     loadComponent: () =>
