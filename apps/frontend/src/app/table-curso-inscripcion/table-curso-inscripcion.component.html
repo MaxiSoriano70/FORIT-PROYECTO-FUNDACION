@@ -1,0 +1,111 @@
+<div class="sectionTableCourses">
+
+    <!-- Buscador -->
+    <mat-form-field appearance="outline">
+        <mat-label>Buscar inscripción</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por alumno, estado..." />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Alumno -->
+        <ng-container matColumnDef="student">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Alumno</th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.studentName }}
+            </td>
+        </ng-container>
+
+        <!-- Cuotas -->
+        <ng-container matColumnDef="quotas">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cuotas</th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.paidQuotas }}/{{ row.totalQuotas }}
+            </td>
+        </ng-container>
+
+        <!-- Pagado -->
+        <ng-container matColumnDef="pagado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Pagado</th>
+            <td mat-cell *matCellDef="let row">
+                {{ (row.paidQuotas * row.pricePerQuota) | currency:'$' }}
+                /
+                {{ (row.totalQuotas * row.pricePerQuota) | currency:'$' }}
+            </td>
+        </ng-container>
+
+        <!-- Precio cuota -->
+        <ng-container matColumnDef="precioCuota">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio cuota</th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.pricePerQuota | currency:'$' }}
+            </td>
+        </ng-container>
+
+        <!-- Estado -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+            <td mat-cell *matCellDef="let row">
+                <span class="fw-bold" [ngClass]="{
+                'text-primary': row.status === 'ACTIVO',
+                'text-danger': row.status === 'ABANDONADO',
+                'text-success': row.status === 'COMPLETADO'
+            }">
+                    {{ row.status }}
+                </span>
+            </td>
+        </ng-container>
+
+
+        <!-- Finalizó -->
+        <ng-container matColumnDef="finalizo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Finalizó</th>
+            <td mat-cell *matCellDef="let row">
+                <span class="fw-bold" [ngClass]="row.courseFinished ? 'text-success' : 'text-danger'">
+                    {{ row.courseFinished ? 'Sí' : 'No' }}
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let row">
+
+                <!-- Pagar SOLO si está activo y no completó las cuotas -->
+                <button *ngIf="row.status === 'ACTIVO'" class="btn btn-success btn-sm m-1" (click)="pagarCuota(row)"
+                    [disabled]="row.paidQuotas >= row.totalQuotas">
+                    <i class="fa-solid fa-dollar-sign"></i> Pagar
+                </button>
+
+                <!-- Dar de Baja SOLO si está ACTIVO -->
+                <button *ngIf="row.status === 'ACTIVO'" class="btn btn-danger btn-sm m-1" (click)="darDeBaja(row)">
+                    <i class="fa-solid fa-user-xmark"></i> Baja
+                </button>
+
+                <!-- Dar de Alta SOLO si está ABANDONADO -->
+                <button *ngIf="row.status === 'ABANDONADO'" class="btn btn-primary btn-sm m-1" (click)="darDeAlta(row)">
+                    <i class="fa-solid fa-user-check"></i> Alta
+                </button>
+
+                <!-- Ningún botón si COMPLETADO -->
+                <!-- (no se renderiza nada por lógica de ngIf arriba) -->
+                <!-- ELIMINAR (solo si el curso NO empezó) -->
+                <button class="btn btn-outline-danger btn-sm m-1" (click)="eliminarInscripcion(row)"
+                    [disabled]="!puedeEliminar()">
+                    <i class="fa-solid fa-trash"></i> Eliminar
+                </button>
+
+            </td>
+        </ng-container>
+
+        <!-- Filas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+
+    <!-- Paginador -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+</div>
