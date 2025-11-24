@@ -58,16 +58,16 @@ export const routes: Routes = [
         import('./features/informacion/informacion.component').then(m => m.InformacionComponent)
     },
     {
-        path: RoutePaths.INSCRIPCIONESXCURSO,
-        canActivate: [ruteoGuard(['ADMIN'])],
-        loadComponent: () =>
-        import('./features/inscripciones/view-inscripcion/view-inscripcion.component').then(m => m.ViewInscripcionComponent)
-    },
-    {
         path: RoutePaths.INSCRIPCIONES,
         canActivate: [ruteoGuard(['ADMIN'])],
         loadComponent: () =>
         import('./features/inscripciones/inscripciones.component').then(m => m.InscripcionesComponent)
+    },
+    {
+        path: RoutePaths.INSCRIPCIONESXCURSO,
+        canActivate: [ruteoGuard(['ADMIN'])],
+        loadComponent: () =>
+        import('./features/inscripciones/view-inscripcion/view-inscripcion.component').then(m => m.ViewInscripcionComponent)
     },
     {
     path: RoutePaths.ERROR404,
