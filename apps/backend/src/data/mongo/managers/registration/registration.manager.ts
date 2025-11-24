@@ -107,6 +107,48 @@ class RegistrationManager extends Manager<IRegistration> {
     findIncomplete = async (): Promise<Lean<IRegistration>[]> => {
         return (await this.model.find({ courseFinished: false }).lean()) as Lean<IRegistration>[];
     };
+
+    abandonCourse = async (registrationId: string): Promise<Lean<IRegistration>> => {
+        const registration = await this.model.findById(registrationId);
+        if (!registration) throw new Error("Inscripción no encontrada");
+
+        registration.status = RegistrationStatus.ABANDONADO;
+
+        await registration.save();
+        return registration.toObject() as Lean<IRegistration>;
+    };
+
+    activateCourse = async (registrationId: string): Promise<Lean<IRegistration>> => {
+        const registration = await this.model.findById(registrationId);
+        if (!registration) throw new Error("Inscripción no encontrada");
+
+        registration.status = RegistrationStatus.ACTIVO;
+
+        await registration.save();
+        return registration.toObject() as Lean<IRegistration>;
+    };
+
+    deleteRegistration = async (registrationId: string): Promise<void> => {
+        const registration = await this.model.findById(registrationId);
+        if (!registration) throw new Error("Inscripción no encontrada");
+
+        const course = await courseManager.findById(registration.courseId.toString());
+        if (!course) throw new Error("Curso no encontrado");
+
+        const today = new Date();
+
+        if (course.startDate && today >= new Date(course.startDate)) {
+            throw new Error("No se puede eliminar la inscripción porque el curso ya ha comenzado.");
+        }
+
+        await this.model.findByIdAndDelete(registrationId);
+
+        await courseManager.editOne(registration.courseId.toString(), {
+            enrolledCount: (course.enrolledCount || 1) - 1
+        });
+    };
+
+
 }
 
 const registrationManager = new RegistrationManager();

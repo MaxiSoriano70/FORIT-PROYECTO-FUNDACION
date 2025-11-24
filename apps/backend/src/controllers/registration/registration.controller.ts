@@ -105,7 +105,7 @@ export const registrationController = {
 
     delete: async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
         try {
-            await registrationManager.deleteById(req.params.id);
+            await registrationManager.deleteRegistration(req.params.id);
             res.status(200).json({
                 message: "Inscripción eliminada correctamente",
                 method: req.method,
@@ -174,6 +174,36 @@ export const registrationController = {
             res.status(200).json({
                 message: "Inscripciones incompletas",
                 data: registrations,
+                method: req.method,
+                url: req.url,
+            });
+        } catch (error: unknown) {
+            const err = error as CustomError;
+            next({ message: err.message || String(error), status: 500 });
+        }
+    },
+
+    abandon: async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const result = await registrationManager.abandonCourse(req.params.id);
+            res.status(200).json({
+                message: "Inscripción marcada como ABANDONADA",
+                data: result,
+                method: req.method,
+                url: req.url,
+            });
+        } catch (error: unknown) {
+            const err = error as CustomError;
+            next({ message: err.message || String(error), status: 500 });
+        }
+    },
+
+    activate: async (req: Request<{ id: string }>, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const result = await registrationManager.activateCourse(req.params.id);
+            res.status(200).json({
+                message: "Inscripción ACTIVADA nuevamente",
+                data: result,
                 method: req.method,
                 url: req.url,
             });

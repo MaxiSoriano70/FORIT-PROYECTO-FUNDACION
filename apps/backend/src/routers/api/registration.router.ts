@@ -3,19 +3,24 @@ import { registrationController } from "../../controllers/registration/registrat
 
 const routerRegistration = Router();
 
-routerRegistration.get("/", registrationController.getAll);
-routerRegistration.get("/:id", registrationController.getById);
 routerRegistration.get("/student/:studentId", registrationController.getByStudent);
 routerRegistration.get("/course/:courseId", registrationController.getByCourse);
 
-routerRegistration.post("/", registrationController.create);
-routerRegistration.put("/:id", registrationController.update);
-routerRegistration.delete("/:id", registrationController.delete);
+routerRegistration.get("/active/list", registrationController.getActive);
+routerRegistration.get("/incomplete/list", registrationController.getIncomplete);
 
 routerRegistration.patch("/:id/quota", registrationController.markQuotaPaid);
 routerRegistration.patch("/:id/finish", registrationController.finishCourse);
 
-routerRegistration.get("/active/list", registrationController.getActive);
-routerRegistration.get("/incomplete/list", registrationController.getIncomplete);
+routerRegistration.put("/:id/abandon", registrationController.abandon);
+routerRegistration.put("/:id/activate", registrationController.activate);
+
+routerRegistration.get("/", registrationController.getAll);
+routerRegistration.post("/", registrationController.create);
+
+routerRegistration.get("/:id", registrationController.getById);
+routerRegistration.put("/:id", registrationController.update);
+routerRegistration.delete("/:id", registrationController.delete);
+
 
 export default routerRegistration;
