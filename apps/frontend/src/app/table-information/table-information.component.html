@@ -49,15 +49,15 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let info">
-
-                <!-- EDITAR -->
-                <button class="btn btn-primary m-1" (click)="onEdit(info)">
+                <!-- EDITAR: opcionalmente ocultar si ya es usuario -->
+                <button *ngIf="!info.isAlreadyUser" class="btn btn-primary m-1" (click)="onEdit(info)">
                     <i class="fa-solid fa-pen-to-square"></i> Editar
                 </button>
 
                 <!-- CONVERTIR EN USUARIO -->
-                <button class="btn btn-success m-1" (click)="onConvert(info)">
-                    <i class="fa-solid fa-user-check"></i> Convertir en Usuario
+                <button class="btn btn-success m-1" [disabled]="info.isAlreadyUser" (click)="onConvert(info)">
+                    <i class="fa-solid fa-user-check"></i>
+                    {{ info.isAlreadyUser ? 'Ya es usuario' : 'Convertir en Usuario' }}
                 </button>
 
                 <!-- ELIMINAR -->
@@ -65,6 +65,7 @@
                     <i class="fa-solid fa-trash"></i> Eliminar
                 </button>
             </td>
+
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
