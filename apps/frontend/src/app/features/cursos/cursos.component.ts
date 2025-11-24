@@ -11,11 +11,12 @@ import { TableCoursesComponent } from "../../table-courses/table-courses.compone
 import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
 import { FooterComponent } from "../../footer/footer.component";
 import { Router } from '@angular/router';
+import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 declare const swal: any;
 
 @Component({
   selector: 'app-cursos',
-  imports: [CommonModule, ToolbarCourseComponent, LoadingComponent, TableCoursesComponent, RollingCodeComponent, FooterComponent],
+  imports: [CommonModule, ToolbarCourseComponent, LoadingComponent, TableCoursesComponent, RollingCodeComponent, FooterComponent, CartelNoHayComponent],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })

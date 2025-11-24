@@ -1,15 +1,26 @@
 <app-toolbar-user (addUser)="onUserAdded($event)"></app-toolbar-user>
 
+<!-- Mostrar tabla si hay usuarios -->
 <div *ngIf="users$ | async as users; else loading">
-    <app-table-users [users]="users" (editUser)="openEditModal($event)" (deleteUser)="onUserDeleted($event)"
-        (detailUser)="openDetailPage($event)">
-    </app-table-users>
+    <ng-container *ngIf="users.length > 0; else noUsers">
+        <app-table-users 
+            [users]="users" 
+            (editUser)="openEditModal($event)" 
+            (deleteUser)="onUserDeleted($event)"
+            (detailUser)="openDetailPage($event)">
+        </app-table-users>
+    </ng-container>
 </div>
 
+<!-- Loading mientras se cargan los datos -->
 <ng-template #loading>
     <app-loading></app-loading>
 </ng-template>
 
-<app-rolling-code></app-rolling-code>
+<!-- Cartel si no hay usuarios -->
+<ng-template #noUsers>
+    <app-cartel-no-hay mensaje="No hay usuarios disponibles"></app-cartel-no-hay>
+</ng-template>
 
+<app-rolling-code></app-rolling-code>
 <app-footer></app-footer>

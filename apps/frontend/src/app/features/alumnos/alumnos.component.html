@@ -1,18 +1,24 @@
 <app-toolbar-student (addStudent)="onStudentAdded($event)"></app-toolbar-student>
 
 <div *ngIf="students$ | async as students; else loading">
-    <app-table-students
-        [students]="students"
-        (editStudent)="openEditModal($event)"
-        (deleteStudent)="onStudentDeleted($event)"
+
+    <!-- Si hay alumnos -->
+    <app-table-students *ngIf="students.length > 0; else noStudents" [students]="students"
+        (editStudent)="openEditModal($event)" (deleteStudent)="onStudentDeleted($event)"
         (detailStudent)="openDetailPage($event)">
     </app-table-students>
+
 </div>
 
+<!-- Loading -->
 <ng-template #loading>
     <app-loading></app-loading>
 </ng-template>
 
-<app-edteam></app-edteam>
+<!-- Cartel “no hay alumnos” -->
+<ng-template #noStudents>
+    <app-cartel-no-hay mensaje="No hay alumnos disponibles"></app-cartel-no-hay>
+</ng-template>
 
+<app-edteam></app-edteam>
 <app-footer></app-footer>

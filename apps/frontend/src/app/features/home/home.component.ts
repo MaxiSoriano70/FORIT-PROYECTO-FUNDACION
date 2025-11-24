@@ -12,11 +12,12 @@ import { Store } from '@ngrx/store';
 import { User } from '../../../shared/entities/user';
 import { Sesion } from '../../ngrx/auth/auth.model';
 import { ModalAddFormInformationComponent } from '../../modal-add-form-information/modal-add-form-information.component';
+import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 declare const swal: any;
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, BannerComponent, LoadingComponent, RollingCodeComponent, FooterComponent],
+  imports: [CommonModule, BannerComponent, LoadingComponent, RollingCodeComponent, FooterComponent, CartelNoHayComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

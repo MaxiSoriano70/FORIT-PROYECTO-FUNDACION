@@ -1,16 +1,23 @@
 <div *ngIf="information$ | async as information; else loading">
-    <app-table-information 
-        [informations]="information"
-        (editInformation)="openEditModal($event)"
-        (deleteInformation)="onInformationDeleted($event)"
-        (convertToUser)="onConvert($event)"
-    ></app-table-information>
+
+    <!-- Si hay información -->
+    <div *ngIf="information.length > 0; else noInformation">
+        <app-table-information [informations]="information" (editInformation)="openEditModal($event)"
+            (deleteInformation)="onInformationDeleted($event)"
+            (convertToUser)="onConvert($event)"></app-table-information>
+    </div>
+
 </div>
 
+<!-- Loading -->
 <ng-template #loading>
     <app-loading></app-loading>
 </ng-template>
 
-<app-edteam></app-edteam>
+<!-- Cartel “no hay información” -->
+<ng-template #noInformation>
+    <app-cartel-no-hay mensaje="No hay información disponible"></app-cartel-no-hay>
+</ng-template>
 
+<app-edteam></app-edteam>
 <app-footer></app-footer>

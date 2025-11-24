@@ -1,15 +1,23 @@
 <app-toolbar-category (addCategory)="onCategoryAdded($event)"></app-toolbar-category>
 
 <div *ngIf="categories$ | async as categories; else loading">
-    <app-table-categories [categories]="categories" (editCategory)="openEditModal($event)"
-        (deleteCategory)="onCategoryDeleted($event)">
+
+    <!-- Si hay categorías -->
+    <app-table-categories *ngIf="categories.length > 0; else noCategorias" [categories]="categories"
+        (editCategory)="openEditModal($event)" (deleteCategory)="onCategoryDeleted($event)">
     </app-table-categories>
+
 </div>
 
+<!-- Loading -->
 <ng-template #loading>
     <app-loading></app-loading>
 </ng-template>
 
-<app-edteam></app-edteam>
+<!-- Cartel “no hay categorías” -->
+<ng-template #noCategorias>
+    <app-cartel-no-hay mensaje="No hay categorías registradas"></app-cartel-no-hay>
+</ng-template>
 
+<app-edteam></app-edteam>
 <app-footer></app-footer>

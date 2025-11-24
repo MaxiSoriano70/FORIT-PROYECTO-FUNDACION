@@ -10,6 +10,7 @@ import { CategoriasApiService } from './categorias-api-service.service';
 import { ModalEditFormCategoryComponent } from '../../modal-edit-form-category/modal-edit-form-category.component';
 import { EdteamComponent } from "../../edteam/edteam.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 declare const swal: any;
 
 @Component({
@@ -21,7 +22,8 @@ declare const swal: any;
     LoadingComponent,
     TableCategoriesComponent,
     EdteamComponent,
-    FooterComponent
+    FooterComponent,
+    CartelNoHayComponent
 ],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']

@@ -9,11 +9,12 @@ import { LoadingComponent } from "../../loading/loading.component";
 import { ModalEditFormInformationComponent } from "../../modal-edit-form-information/modal-edit-form-information.component";
 import { EdteamComponent } from "../../edteam/edteam.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 declare const swal: any;
 
 @Component({
   selector: 'app-informacion',
-  imports: [CommonModule, TableInformationComponent, LoadingComponent, EdteamComponent, FooterComponent],
+  imports: [CommonModule, TableInformationComponent, LoadingComponent, EdteamComponent, FooterComponent, CartelNoHayComponent],
   templateUrl: './informacion.component.html',
   styleUrl: './informacion.component.css'
 })

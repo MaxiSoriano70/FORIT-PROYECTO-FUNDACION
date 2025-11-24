@@ -11,6 +11,7 @@ import { ModalEditFormUserComponent } from '../../modal-edit-form-user/modal-edi
 import { Router } from '@angular/router';
 import { RollingCodeComponent } from "../../rolling-code/rolling-code.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 declare const swal: any;
 
 @Component({
@@ -22,7 +23,8 @@ declare const swal: any;
     TableUsersComponent,
     LoadingComponent,
     RollingCodeComponent,
-    FooterComponent
+    FooterComponent,
+    CartelNoHayComponent
 ],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'

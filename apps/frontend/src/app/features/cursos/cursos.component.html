@@ -1,21 +1,24 @@
 <app-toolbar-course (addCourse)="onCourseAdded($event)"></app-toolbar-course>
 
 <div *ngIf="courses$ | async as courses; else loading">
-    <app-table-courses [courses]="courses"
-    (editCourse)="openEditModal($event)"
-    (deleteCourse)="onCourseDeleted($event)"
-    (viewCourseDetails)="openDetailPage($event)">
+
+    <!-- Si hay cursos -->
+    <app-table-courses *ngIf="courses.length > 0; else noCursos" [courses]="courses"
+        (editCourse)="openEditModal($event)" (deleteCourse)="onCourseDeleted($event)"
+        (viewCourseDetails)="openDetailPage($event)">
     </app-table-courses>
+
 </div>
 
+<!-- Loading -->
 <ng-template #loading>
     <app-loading></app-loading>
 </ng-template>
 
+<!-- Cartel “no hay cursos” -->
+<ng-template #noCursos>
+    <app-cartel-no-hay mensaje="No hay cursos disponibles"></app-cartel-no-hay>
+</ng-template>
+
 <app-rolling-code></app-rolling-code>
-
-<app-footer></app-footer>
-
-<app-rolling-code></app-rolling-code>
-
 <app-footer></app-footer>

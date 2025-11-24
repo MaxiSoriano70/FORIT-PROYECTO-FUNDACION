@@ -6,53 +6,42 @@
     </article>
 
     <div *ngIf="courses$ | async as courses; else loading">
-        <article class="aCursos">
+
+        <!-- Si hay cursos -->
+        <article class="aCursos" *ngIf="courses.length > 0; else noCourses">
             <div *ngFor="let course of courses" class="card text-center mb-3 shadow-sm" style="width: 20rem;">
                 <img [src]="course.imageUrl || 'https://i.ibb.co/2kR9YQk/default-course.png'" class="card-img-top"
                     [alt]="course.name" width="320" height="200" />
 
                 <div class="card-body">
                     <h5 class="card-title fw-bold">{{ course.name }}</h5>
-
-                    <p class="mb-1">
-                        <strong>Precio/mes:</strong>
-                        {{ course.pricePerMonth | currency:'ARS':'symbol' }}
+                    <p class="mb-1"><strong>Precio/mes:</strong> {{ course.pricePerMonth | currency:'ARS':'symbol' }}
                     </p>
-
-                    <p class="mb-1">
-                        <strong>Inicio:</strong>
-                        {{ course.startDate | date:'dd/MM/yyyy' }}
+                    <p class="mb-1"><strong>Inicio:</strong> {{ course.startDate | date:'dd/MM/yyyy' }}</p>
+                    <p class="mb-1"><strong>Fin:</strong> {{ course.endDate | date:'dd/MM/yyyy' }}</p>
+                    <p class="mb-1"><strong>Cupos:</strong> {{ course.maxCapacity - course.enrolledCount }} disponibles
                     </p>
-
-                    <p class="mb-1">
-                        <strong>Fin:</strong>
-                        {{ course.endDate | date:'dd/MM/yyyy' }}
-                    </p>
-
-                    <p class="mb-1">
-                        <strong>Cupos:</strong>
-                        {{ course.maxCapacity - course.enrolledCount }} disponibles
-                    </p>
-
-                    <p class="card-text mt-2 text-secondary">
-                        {{ course.description }}
-                    </p>
-
+                    <p class="card-text mt-2 text-secondary">{{ course.description }}</p>
                     <button type="button" class="information-btn" *ngIf="course._id" (click)="abrirModal(course._id!)">
                         <i class="fa-solid fa-circle-info"></i> Información
                     </button>
-
                 </div>
             </div>
         </article>
+
     </div>
 
+    <!-- Loading -->
     <ng-template #loading>
         <app-loading></app-loading>
+    </ng-template>
+
+    <!-- Cartel “no hay cursos” -->
+    <ng-template #noCourses>
+        <app-cartel-no-hay mensaje="No hay cursos disponibles"></app-cartel-no-hay>
     </ng-template>
 
 </section>
 
 <app-rolling-code></app-rolling-code>
-
 <app-footer></app-footer>

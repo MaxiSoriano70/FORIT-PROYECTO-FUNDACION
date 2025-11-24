@@ -11,6 +11,7 @@ import { ModalEditFormStudentComponent } from '../../modal-edit-form-student/mod
 import { Router } from '@angular/router';
 import { EdteamComponent } from "../../edteam/edteam.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 
 declare const swal: any;
 
@@ -23,7 +24,8 @@ declare const swal: any;
     TableStudentsComponent,
     LoadingComponent,
     EdteamComponent,
-    FooterComponent
+    FooterComponent,
+    CartelNoHayComponent
 ],
   templateUrl: './alumnos.component.html',
   styleUrl: './alumnos.component.css'
