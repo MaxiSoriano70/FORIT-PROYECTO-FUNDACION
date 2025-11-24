@@ -1,0 +1,27 @@
+.noTienesTareasPendiente{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.logoNoTienes{
+    font-size: 32px;
+    color: var(--color-danger);
+}
+
+.mensajeNoTareas{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (max-width: 770px) {
+    .noTienesTareasPendiente{
+        width: 100%;
+    }
+}
