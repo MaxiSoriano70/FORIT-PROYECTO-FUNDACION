@@ -1,0 +1,27 @@
+<app-toolbar-registration
+    [alumnosDisponibles]="alumnosDisponibles"
+    [courseId]="courseId"
+    (addRegistration)="registrarAlumno($event)">
+</app-toolbar-registration>
+
+<h2 class="sectionTitulo">ALUMNOS INSCRIPTOS</h2>
+
+<ng-container *ngIf="!loading; else loadingTpl">
+
+    <app-cartel-no-hay
+        *ngIf="inscripciones.length === 0; else tabla"
+        mensaje="Este curso no tiene inscripciones registradas">
+    </app-cartel-no-hay>
+
+    <ng-template #tabla>
+        <app-table-curso-inscripcion
+            [courseId]="courseId"
+            [inscripciones]="inscripciones">
+        </app-table-curso-inscripcion>
+    </ng-template>
+
+</ng-container>
+
+<ng-template #loadingTpl>
+    <app-loading></app-loading>
+</ng-template>
