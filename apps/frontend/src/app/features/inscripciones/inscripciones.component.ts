@@ -6,10 +6,12 @@ import { Router } from '@angular/router';
 import { CartelNoHayComponent } from "../../cartel-no-hay/cartel-no-hay.component";
 import { LoadingComponent } from "../../loading/loading.component";
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from "../../footer/footer.component";
+import { RollingCodeComponent } from '../../rolling-code/rolling-code.component';
 @Component({
   selector: 'app-inscripciones',
   standalone: true,
-  imports: [CommonModule, TableRegistrationsComponent, CartelNoHayComponent, LoadingComponent],
+  imports: [CommonModule, TableRegistrationsComponent, CartelNoHayComponent, LoadingComponent, RollingCodeComponent, FooterComponent],
   templateUrl: './inscripciones.component.html',
   styleUrl: './inscripciones.component.css'
 })

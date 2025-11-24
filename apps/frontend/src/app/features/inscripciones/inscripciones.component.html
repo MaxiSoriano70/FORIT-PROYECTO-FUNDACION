@@ -10,3 +10,7 @@
 <app-table-registrations *ngIf="!isLoading && courses.length > 0" [courses]="courses"
     (manageStudents)="goToCourse($event)">
 </app-table-registrations>
+
+<app-rolling-code></app-rolling-code>
+
+<app-footer></app-footer>
