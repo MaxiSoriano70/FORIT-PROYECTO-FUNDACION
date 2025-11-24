@@ -1,0 +1,28 @@
+<div class="modal-header bg-color-principal">
+    <h5 class="modal-title text-white">Agregar Alumno al Curso</h5>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-color-fondo">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label class="form-label fw-bolder">Alumno:</label>
+            <select formControlName="studentId" class="form-select bg-input">
+                <option value="">Seleccione un alumno</option>
+                <option *ngFor="let alumno of alumnosDisponibles" [value]="alumno._id">
+                    {{ alumno.firstName }} {{ alumno.lastName }}
+                </option>
+            </select>
+
+            <div class="text-danger"
+                *ngIf="registrationForm.get('studentId')?.touched && registrationForm.get('studentId')?.invalid">
+                <small>Seleccione un alumno.</small>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-personalized-2 mx-1 fw-bold">Guardar</button>
+            <button type="button" class="btn btn-personalized-1 mx-1 fw-bold" (click)="close()">Cancelar</button>
+        </div>
+
+    </form>
+</div>
