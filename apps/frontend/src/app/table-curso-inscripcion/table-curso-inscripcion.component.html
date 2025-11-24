@@ -88,9 +88,7 @@
                     <i class="fa-solid fa-user-check"></i> Alta
                 </button>
 
-                <!-- Ningún botón si COMPLETADO -->
-                <!-- (no se renderiza nada por lógica de ngIf arriba) -->
-                <!-- ELIMINAR (solo si el curso NO empezó) -->
+                <!-- Eliminar Inscripción -->
                 <button class="btn btn-outline-danger btn-sm m-1" (click)="eliminarInscripcion(row)"
                     [disabled]="!puedeEliminar()">
                     <i class="fa-solid fa-trash"></i> Eliminar

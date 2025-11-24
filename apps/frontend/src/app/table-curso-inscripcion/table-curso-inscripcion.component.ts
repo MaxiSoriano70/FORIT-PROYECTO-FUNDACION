@@ -77,16 +77,13 @@ export class TableCursoInscripcionComponent implements OnInit, OnChanges, AfterV
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  /**
-   * SOLO se puede eliminar una inscripción si el curso no empezó aún.
-   */
   puedeEliminar(): boolean {
-    if (!this.curso) return false; // curso todavía no cargó
+    if (!this.curso) return false;
 
     const hoy = new Date();
     const inicio = new Date(this.curso.startDate);
 
-    return hoy < inicio; // true = habilitado
+    return hoy < inicio;
   }
 
   pagarCuota(row: any) {

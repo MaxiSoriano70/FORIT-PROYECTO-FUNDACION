@@ -35,9 +35,12 @@ npm install --save-dev @types/express@5.0.3
 
 npm install --save-dev @types/mongoose@5.11.96
 
+npm run build
 
 /*FRONT END*/
 
 npm install @ngrx/store@19 @ngrx/effects@19 @ngrx/store-devtools@19 --save
 
 npm install @ng-bootstrap/ng-bootstrap@18 bootstrap@5
+
+npm run storybook
