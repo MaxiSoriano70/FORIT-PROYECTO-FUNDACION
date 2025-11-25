@@ -120,6 +120,18 @@ class InformationManager extends Manager<IInformation> {
         return { user: newUser, info: updatedInfo };
     }
 
+    async markAsInformed(informationId: string) {
+        const info = await this.findById(informationId);
+        if (!info) throw new Error("No se encontró la información especificada.");
+
+        const updatedInfo = await this.editOne(informationId, {
+            status: InformationStatus.INFORMADO,
+            updatedAt: new Date(),
+        });
+
+        return updatedInfo;
+    }
+
 }
 
 const informationManager = new InformationManager();

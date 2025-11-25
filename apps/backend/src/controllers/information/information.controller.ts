@@ -97,3 +97,27 @@ export const convertInformationToUser = async (req: Request<{ id: string }>, res
         next({ message: err.message || String(error), status: 400 });
     }
 };
+
+export const markInformationAsInformed = async (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const updatedInfo = await informationManager.markAsInformed(req.params.id);
+
+        if (!updatedInfo) {
+            return next({ message: "Solicitud no encontrada", status: 404 });
+        }
+
+        res.status(200).json({
+            message: "Solicitud marcada como INFORMADO correctamente",
+            data: updatedInfo,
+            method: req.method,
+            url: req.url,
+        });
+    } catch (error: unknown) {
+        const err = error as CustomError;
+        next({ message: err.message || String(error), status: 500 });
+    }
+};

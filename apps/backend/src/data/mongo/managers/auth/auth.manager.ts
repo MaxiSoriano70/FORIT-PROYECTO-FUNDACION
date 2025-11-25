@@ -1,6 +1,7 @@
 import { userManager } from "../user/user.manager.js";
 import { IUser } from "../../models/user.model.js";
 import { Document } from "mongoose";
+import bcrypt from 'bcryptjs';
 
 type Lean<T> = Omit<T, keyof Document>;
 
@@ -9,7 +10,8 @@ class AuthManager {
         const user = await userManager.findByEmail(email);
         if (!user) throw new Error("Usuario no encontrado");
 
-        if (user.password !== password) {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
             throw new Error("Contraseña incorrecta");
         }
 
