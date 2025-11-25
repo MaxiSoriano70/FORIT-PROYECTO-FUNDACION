@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./           # Carpeta raíz donde está el proyecto
+      dockerfile: dockerfile.backend  # Dockerfile específico para el backend
+    # image: foritfundacion_backend:latest   # Nombre de la imagen creada (usamos build para crear la imagen localmente)
+    container_name: foritfundacion_backend # Nombre del contenedor
+    environment:
+      - NODE_ENV=production # Variable de entorno para producción
+    ports:
+      - "8080:8080"
+    restart: unless-stopped # Reinicia si se detiene por error
+
+  frontend:
+    build:
+      context: ./           # Usamos el raíz del proyecto
+      dockerfile: dockerfile.frontend # Dockerfile del frontend
+    # image: foritfundacion_frontend:latest
+    container_name: foritfundacion_frontend
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+    depends_on:
+      - backend             # Espera a que el backend esté arriba

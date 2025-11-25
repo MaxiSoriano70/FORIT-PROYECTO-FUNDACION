@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { User } from "../../entities";
-import { UserRole } from "../../../dist/utils/enums/userRole";
+import { UserRole } from "../../utils/enums/userRole";
 
 export function userMock(opts?: Partial<User>): User {
     return {
