@@ -70,6 +70,12 @@ export const routes: Routes = [
         import('./features/inscripciones/view-inscripcion/view-inscripcion.component').then(m => m.ViewInscripcionComponent)
     },
     {
+        path: RoutePaths.MISCURSOS,
+        canActivate: [ruteoGuard(['ESTUDIANTE', 'ADMIN'])],
+        loadComponent: () =>
+            import('./features/mis-cursos/mis-cursos.component').then(m => m.MisCursosComponent)
+    },
+    {
     path: RoutePaths.ERROR404,
     loadComponent: () =>
         import('./features/error404/error404.component').then(m => m.Error404Component)

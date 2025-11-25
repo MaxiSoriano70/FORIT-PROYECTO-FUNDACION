@@ -1,0 +1,54 @@
+<div class="container my-4">
+
+    <h2 class="text-center mb-4 fw-bold">📚 Mis Cursos</h2>
+
+    <div *ngIf="loading" class="text-center my-5">
+        <div class="spinner-border text-primary"></div>
+        <p class="mt-2">Cargando cursos...</p>
+    </div>
+
+    <div *ngIf="!loading && cursosCompletos.length === 0" class="alert alert-info text-center">
+        No tienes cursos registrados.
+    </div>
+
+    <div class="row" *ngIf="!loading">
+        <div class="col-md-6 mb-4" *ngFor="let item of cursosCompletos">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+
+                    <h5 class="card-title fw-bold text-primary">
+                        {{ item.curso?.name }}
+                    </h5>
+
+                    <p class="card-subtitle text-muted mb-3">
+                        {{ item.curso?.description }}
+                    </p>
+
+                    <hr>
+
+                    <p><strong>📅 Fecha de inicio:</strong> {{ item.curso?.startDate | date }}</p>
+                    <p><strong>📅 Fecha de fin:</strong> {{ item.curso?.endDate | date }}</p>
+
+                    <p><strong>📌 Estado:</strong>
+                        <span class="badge"
+                              [ngClass]="item.status === 'ACTIVO' ? 'bg-success' : 'bg-secondary'">
+                            {{ item.status }}
+                        </span>
+                    </p>
+
+                    <p><strong>💰 Precio por cuota:</strong> ${{ item.pricePerQuota }}</p>
+                    <p><strong>🔢 Total cuotas:</strong> {{ item.totalQuotas }}</p>
+                    <p><strong>✔ Cuotas pagadas:</strong> {{ item.paidQuotas }}</p>
+
+                    <hr>
+
+                    <p class="fw-bold fs-5">
+                        Total del curso: ${{ item.totalAmount }}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

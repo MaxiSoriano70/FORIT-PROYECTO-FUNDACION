@@ -10,6 +10,6 @@ export enum RoutePaths{
     INFORMACION = "informacion",
     INSCRIPCIONES = "inscripciones",
     INSCRIPCIONESXCURSO = "inscripcionesxcurso/:id",
-    NOSOTROS = "nosotros",
+    MISCURSOS = "miscursos",
     ERROR404 = "**"
 }

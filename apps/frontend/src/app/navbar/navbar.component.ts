@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { RoutePaths } from '../../shared/routes';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalIniciarSesionComponent } from "../modal-iniciar-sesion/modal-iniciar-sesion.component";
@@ -23,9 +23,14 @@ export class NavbarComponent implements OnInit {
   routePaths = RoutePaths;
   usuario$: Observable<User | null>;
 
-  constructor(private modalService: NgbModal, private store: Store<{ sesion: Sesion }>) {
+  constructor(
+    private modalService: NgbModal,
+    private store: Store<{ sesion: Sesion }>,
+    private router: Router
+  ) {
     this.usuario$ = this.store.select(state => state.sesion.usuarioLogueado);
   }
+
 
   ngOnInit() {
     if (typeof localStorage !== 'undefined') {
@@ -80,6 +85,8 @@ export class NavbarComponent implements OnInit {
       if (confirmar && typeof localStorage !== 'undefined') {
         localStorage.removeItem('usuarioLogueado');
         this.store.dispatch(cerrarSesion());
+
+        this.router.navigate([this.routePaths.HOME]);
         swal({
           title: "Sesión cerrada",
           icon: "info",
@@ -89,6 +96,7 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+
 
   abrirModalPerfil(usuario: User) {
     const modalRef = this.modalService.open(ModalEditFormPerfilComponent, { centered: true });
