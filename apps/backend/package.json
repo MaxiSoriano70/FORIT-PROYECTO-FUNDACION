@@ -15,6 +15,7 @@
     "@types/express": "5.0.3",
     "@types/mongoose": "5.11.96",
     "@types/node": "^22.7.4",
+    "@types/nodemailer": "^7.0.4",
     "mongodb-memory-server": "^10.1.4",
     "tsx": "4.19.2",
     "typescript": "^5.9.3",
@@ -24,6 +25,7 @@
     "bcryptjs": "2.4.3",
     "cors": "^2.8.5",
     "dotenv": "17.2.3",
-    "express": "5.1.0"
+    "express": "5.1.0",
+    "nodemailer": "^7.0.10"
   }
 }

@@ -80,7 +80,7 @@ export const getUserByFullName = async (
 
 export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const user = await userManager.save(req.body);
+        const user = await userManager.createUser(req.body);
         res.status(201).json({ message: "Usuario creado correctamente", data: user, method: req.method, url: req.url });
     } catch (error: unknown) {
         const err = error as CustomError;
