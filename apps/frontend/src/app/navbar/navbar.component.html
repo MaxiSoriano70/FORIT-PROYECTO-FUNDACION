@@ -91,7 +91,7 @@
                     <i class="fa-solid fa-caret-down"></i>
                     <ul class="submenu">
                         <li>
-                            <a href="#" aria-label="Datos Personales" (click)="abrirModalPerfil(usuario)">
+                            <a href="#" aria-label="Datos Personales" (click)="abrirModalPerfil(usuario)" (click)="$event.preventDefault()">
                                 <span><i class="fa-solid fa-user-pen"></i> Datos Personales</span>
                             </a>
                         </li>

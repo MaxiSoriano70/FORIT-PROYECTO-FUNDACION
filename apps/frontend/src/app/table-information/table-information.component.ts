@@ -9,6 +9,7 @@ import { IInformation } from '../../shared/entities/information';
 import { TableInformationApiService } from './table-information-api.service';
 import { forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+declare const swal: any;
 
 @Component({
   selector: 'app-table-information',
@@ -32,13 +33,13 @@ export class TableInformationComponent implements OnChanges, AfterViewInit {
   @Output() viewInformationDetails = new EventEmitter<IInformation>();
   @Output() convertToUser = new EventEmitter<IInformation>();
 
-  displayedColumns: string[] = ['fullName','email','phone','courseName','status','actions'];
+  displayedColumns: string[] = ['fullName', 'email', 'phone', 'courseName', 'status', 'actions'];
   dataSource = new MatTableDataSource<IInformation>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private apiService: TableInformationApiService) {}
+  constructor(private apiService: TableInformationApiService) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -80,4 +81,31 @@ export class TableInformationComponent implements OnChanges, AfterViewInit {
   onConvert(info: IInformation): void {
     this.convertToUser.emit(info);
   }
+
+  onMarkAsInformed(info: IInformation): void {
+
+    swal({
+      title: '¿Marcar como informado?',
+      text: `Se marcará como INFORMADO a ${info.firstName} ${info.lastName}.`,
+      icon: 'warning',
+      buttons: ['Cancelar', 'Marcar'],
+      dangerMode: false
+    }).then((confirm: boolean) => {
+      if (!confirm) return;
+
+      this.apiService.markAsInformed(info._id).subscribe({
+        next: () => {
+          info.status = "INFORMADO";
+          this.dataSource.data = [...this.dataSource.data];
+          swal('Éxito', 'Marcado como INFORMADO.', 'success');
+        },
+        error: err => {
+          console.error('Error actualizando estado:', err);
+          swal('Error', 'No se pudo marcar como informado.', 'error');
+        }
+      });
+    });
+
+  }
+
 }

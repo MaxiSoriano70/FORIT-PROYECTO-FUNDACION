@@ -25,7 +25,7 @@ export class InformacionComponent implements OnInit {
   constructor(
     private infoService: InformacionServiceService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadInformation();
@@ -51,7 +51,7 @@ export class InformacionComponent implements OnInit {
           error: () => swal('Error', 'Ocurrió un error al actualizar.', 'error')
         });
       }
-    }).catch(() => {});
+    }).catch(() => { });
   }
 
   onInformationDeleted(info: IInformation): void {
@@ -77,14 +77,25 @@ export class InformacionComponent implements OnInit {
   }
 
   onConvert(info: IInformation) {
-    this.infoService.convertToUser(info._id!).pipe(
-      switchMap(() => {
-        this.loadInformation();
-        return of(null);
-      })
-    ).subscribe({
-      next: () => swal('Éxito', 'Convertido en usuario.', 'success'),
-      error: () => swal('Error', 'No se pudo convertir.', 'error')
+    swal({
+      title: '¿Convertir en usuario?',
+      text: `${info.firstName} ${info.lastName} pasará a ser un usuario del sistema.`,
+      icon: 'warning',
+      buttons: ['Cancelar', 'Convertir'],
+      dangerMode: false
+    }).then((confirm: boolean) => {
+      if (confirm) {
+        this.infoService.convertToUser(info._id!).pipe(
+          switchMap(() => {
+            this.loadInformation();
+            return of(null);
+          })
+        ).subscribe({
+          next: () => swal('Éxito', 'Convertido en usuario.', 'success'),
+          error: () => swal('Error', 'No se pudo convertir.', 'error')
+        });
+      }
     });
   }
+
 }

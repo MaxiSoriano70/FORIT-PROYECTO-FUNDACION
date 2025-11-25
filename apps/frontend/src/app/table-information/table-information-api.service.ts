@@ -8,15 +8,19 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class TableInformationApiService {
 
-  private baseUrl = "http://localhost:8080/api/user/email/";
+  private baseUrl = "http://localhost:8080/api/";
 
   constructor(private http: HttpClient) {}
 
   isUserByEmail(email: string): Observable<boolean> {
-    return this.http.get<{message: string, data: any}>(`${this.baseUrl}${email}`)
+    return this.http.get<{message: string, data: any}>(`${this.baseUrl}user/email/${email}`)
       .pipe(
         map(resp => !!resp.data),
         catchError(() => of(false))
       );
+  }
+
+  markAsInformed(id: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}information/${id}`, { status: "INFORMADO" });
   }
 }
