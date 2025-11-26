@@ -44,3 +44,37 @@ npm install @ngrx/store@19 @ngrx/effects@19 @ngrx/store-devtools@19 --save
 npm install @ng-bootstrap/ng-bootstrap@18 bootstrap@5
 
 npm run storybook
+
+
+DOCKER
+
+@"
+docker version
+  Muestra la versión instalada de Docker (client y server).
+
+docker info
+  Muestra información detallada del entorno Docker (contenedores, imágenes, redes, volúmenes, sistema operativo, etc.).
+
+Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+  Abre Docker Desktop desde PowerShell o CMD.
+
+Restart-Service -Name com.docker.service -Force
+  Reinicia el servicio de Docker en Windows, útil si Docker no responde.
+
+docker-compose up --build
+  Construye las imágenes y levanta los servicios mostrando los logs. Ideal tras cambios en Dockerfile o código.
+
+docker-compose up -d
+  Levanta los servicios en segundo plano (detached), sin mostrar logs en terminal.
+
+docker-compose down
+  Detiene y elimina los contenedores creados por docker-compose up. Con -v también elimina volúmenes.
+
+docker-compose stop
+  Detiene los contenedores pero no los elimina. Útil para pausar y levantar después.
+
+docker-compose start
+  Inicia contenedores que fueron detenidos con stop, sin reconstruir imágenes ni afectar volúmenes.
+"@ | Out-File "C:\ruta\deseada\docker_comandos.txt" -Encoding UTF8
+
+
