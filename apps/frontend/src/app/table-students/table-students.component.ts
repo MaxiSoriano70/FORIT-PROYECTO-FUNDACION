@@ -36,12 +36,14 @@ export class TableStudentsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.students);
+    this.dataSource = new MatTableDataSource([...this.students].reverse());
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnChanges(): void {
     if (this.students) {
-      this.dataSource = new MatTableDataSource(this.students);
+      this.dataSource = new MatTableDataSource([...this.students].reverse());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }

@@ -2,15 +2,24 @@
     <h3>INSCRIPCIONES</h3>
 </section>
 
-<app-loading *ngIf="courses.length === 0 && isLoading"></app-loading>
+<div *ngIf="courses$ | async as courses; else loading">
 
-<app-cartel-no-hay *ngIf="!isLoading && courses.length === 0" mensaje="No hay cursos disponibles">
-</app-cartel-no-hay>
+    <!-- Si hay cursos -->
+    <app-table-registrations *ngIf="courses.length > 0; else noCursos" [courses]="courses"
+        (manageStudents)="goToCourse($event)">
+    </app-table-registrations>
 
-<app-table-registrations *ngIf="!isLoading && courses.length > 0" [courses]="courses"
-    (manageStudents)="goToCourse($event)">
-</app-table-registrations>
+</div>
+
+<!-- Loading -->
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
+
+<!-- Cartel “no hay cursos” -->
+<ng-template #noCursos>
+    <app-cartel-no-hay mensaje="No hay cursos disponibles"></app-cartel-no-hay>
+</ng-template>
 
 <app-rolling-code></app-rolling-code>
-
 <app-footer></app-footer>

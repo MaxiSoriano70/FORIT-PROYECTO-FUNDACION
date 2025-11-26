@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ViewInscripcionApiService } from './view-inscripcion-api.service';
-import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, forkJoin, of, switchMap, map } from 'rxjs';
+import { ViewInscripcionApiService } from './view-inscripcion-api.service';
 import { TableCursoInscripcionComponent } from '../../../table-curso-inscripcion/table-curso-inscripcion.component';
 import { CartelNoHayComponent } from '../../../cartel-no-hay/cartel-no-hay.component';
 import { LoadingComponent } from '../../../loading/loading.component';
@@ -25,61 +25,55 @@ declare const swal: any;
 export class ViewInscripcionComponent implements OnInit {
 
   courseId!: string;
-  inscripciones: any[] = [];
-  alumnosDisponibles: any[] = [];
-  loading = true;
+  inscripciones$: Observable<any[]> = of([]);
+  alumnosDisponibles$: Observable<any[]> = of([]);
 
   constructor(
     private route: ActivatedRoute,
     private api: ViewInscripcionApiService
   ) { }
 
-  async ngOnInit() {
-
+  ngOnInit(): void {
     this.courseId = this.route.snapshot.paramMap.get('id')!;
+    this.loadInscripciones();
+  }
 
-    this.loading = true;
+  loadInscripciones() {
+    this.inscripciones$ = this.api.getRegistrationsByCourse(this.courseId).pipe(
+      map(regs => regs || []), // <-- aseguramos que nunca sea null
+      switchMap(regs => {
+        if (!regs.length) return of([]);
 
-    // 1) Traer inscripciones del curso
-    const regs = await firstValueFrom(this.api.getRegistrationsByCourse(this.courseId));
+        const inscripcionesConNombres$ = regs.map(reg =>
+          this.api.getUser(reg.studentId).pipe(
+            map(user => ({
+              ...reg,
+              studentName: `${user.firstName} ${user.lastName}`
+            }))
+          )
+        );
 
-    // 2) Armar inscripciones con nombres
-    this.inscripciones = await Promise.all(
-      regs.map(async reg => {
-        const user = await firstValueFrom(this.api.getUser(reg.studentId));
-        return {
-          ...reg,
-          studentName: `${user.firstName} ${user.lastName}`
-        };
+        return forkJoin(inscripcionesConNombres$);
       })
     );
 
-    // 3) Traer TODOS los alumnos
-    const todosLosAlumnos = await firstValueFrom(this.api.getAllStudents());
-
-    // 4) Filtrar los ya inscriptos
-    const idsInscriptos = new Set(this.inscripciones.map(i => i.studentId));
-
-    this.alumnosDisponibles = todosLosAlumnos.filter(a => !idsInscriptos.has(a._id));
-
-    this.loading = false;
+    this.alumnosDisponibles$ = this.inscripciones$.pipe(
+      switchMap(inscripciones =>
+        this.api.getAllStudents().pipe(
+          map(allStudents => (allStudents || []).filter(a => !inscripciones.some(i => i.studentId === a._id)))
+        )
+      )
+    );
   }
 
   registrarAlumno(body: { studentId: string; courseId: string }) {
-
-    this.loading = true;
-
     this.api.createRegistration(body).subscribe({
       next: () => {
         swal("¡Éxito!", "Alumno agregado a la inscripción", "success");
-        this.ngOnInit();
+        this.loadInscripciones();
       },
-      error: () => {
-        this.loading = false;
-        swal("Error", "No se pudo registrar el alumno", "error");
-      }
+      error: () => swal("Error", "No se pudo registrar el alumno", "error")
     });
-
   }
 
 }

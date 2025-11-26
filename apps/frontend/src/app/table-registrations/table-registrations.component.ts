@@ -53,7 +53,7 @@ export class TableRegistrationsComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.data = this.courses;
+    this.dataSource.data = [...this.courses].reverse();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -64,12 +64,13 @@ export class TableCursoInscripcionComponent implements OnInit, OnChanges, AfterV
   }
 
   ngOnChanges() {
-    this.dataSource.data = this.inscripciones;
+    this.dataSource.data = [...this.inscripciones].reverse();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.data = [...this.inscripciones].reverse();
   }
 
   applyFilter(event: Event) {

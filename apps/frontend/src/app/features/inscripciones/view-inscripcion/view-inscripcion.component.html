@@ -1,27 +1,29 @@
 <app-toolbar-registration
-    [alumnosDisponibles]="alumnosDisponibles"
+    [alumnosDisponibles]="(alumnosDisponibles$ | async) || []"
     [courseId]="courseId"
     (addRegistration)="registrarAlumno($event)">
 </app-toolbar-registration>
 
 <h2 class="sectionTitulo">ALUMNOS INSCRIPTOS</h2>
 
-<ng-container *ngIf="!loading; else loadingTpl">
+<div *ngIf="inscripciones$ | async as inscripciones; else loadingTpl">
 
-    <app-cartel-no-hay
-        *ngIf="inscripciones.length === 0; else tabla"
-        mensaje="Este curso no tiene inscripciones registradas">
-    </app-cartel-no-hay>
-
-    <ng-template #tabla>
+    <!-- Si hay inscripciones -->
+    <div *ngIf="inscripciones.length > 0; else noInscripciones">
         <app-table-curso-inscripcion
             [courseId]="courseId"
             [inscripciones]="inscripciones">
         </app-table-curso-inscripcion>
-    </ng-template>
+    </div>
 
-</ng-container>
+</div>
 
+<!-- Loading -->
 <ng-template #loadingTpl>
     <app-loading></app-loading>
+</ng-template>
+
+<!-- Cartel “no hay inscripciones” -->
+<ng-template #noInscripciones>
+    <app-cartel-no-hay mensaje="Este curso no tiene inscripciones registradas"></app-cartel-no-hay>
 </ng-template>

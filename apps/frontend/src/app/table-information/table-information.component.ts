@@ -44,6 +44,7 @@ export class TableInformationComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.data = [...this.dataSource.data].reverse();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,7 +59,7 @@ export class TableInformationComponent implements OnChanges, AfterViewInit {
       );
 
       forkJoin(checks).subscribe(results => {
-        this.dataSource.data = results;
+        this.dataSource.data = [...results].reverse();
         if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
       });
     }

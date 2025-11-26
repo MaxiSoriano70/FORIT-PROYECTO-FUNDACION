@@ -42,10 +42,11 @@ export class TableCategoriesComponent implements OnChanges, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.data = this.categories;
-  }
+  this.dataSource.paginator = this.paginator;
+  this.dataSource.sort = this.sort;
+  this.dataSource.data = [...this.categories].reverse();
+}
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['categories'] && !changes['categories'].firstChange) {
