@@ -78,3 +78,4 @@ docker-compose start
 "@ | Out-File "C:\ruta\deseada\docker_comandos.txt" -Encoding UTF8
 
 
+FALTA IMPLEMENTAR EL DOMAIN AL BACK END
